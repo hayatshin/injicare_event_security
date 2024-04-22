@@ -22,8 +22,6 @@ void main() async {
   setPathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
 
-  WidgetsFlutterBinding.ensureInitialized();
-
   runApp(
     const ProviderScope(
       child: MyApp(),

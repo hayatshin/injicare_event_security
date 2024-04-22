@@ -10,8 +10,16 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
+    const supabaseUrl = String.fromEnvironment('SUPABASE_URL');
+    const supabaseAnonKey = String.fromEnvironment('SUPABASE_ANONKEY');
+
     return const Scaffold(
-      body: Text("home"),
+      body: Column(
+        children: [
+          Text(supabaseUrl),
+          Text(supabaseAnonKey),
+        ],
+      ),
     );
   }
 }
