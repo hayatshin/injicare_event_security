@@ -12,18 +12,6 @@ jobs:
       - uses: bluefireteam/flutter-gh-pages@v7
         with:
           baseHref: /injicare-event/
-      - name: Create.env
-        shell: bash
         env:
           SUPABASE_URL: ${{secrets.SUPABASE_URL}}
           SUPABASE_ANONKEY: ${{secrets.SUPABASE_ANONKEY}}
-        run: |
-          cd build/web
-          git init
-          git status
-          git remote add origin https://${{secrets.SUPABASE_URL}}@github.com/onatcipli/flutter_web.git
-          git remote add origin https://${{secrets.SUPABASE_ANONKEY}}@github.com/onatcipli/flutter_web.git
-          git checkout -b gh-pages
-          git add --all
-          git commit -m "update"
-          git push origin gh-pages -f
