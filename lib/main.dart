@@ -11,8 +11,8 @@ void main() async {
   // final supabaseUrlDebug = dotenv.env["SUPABASE_URL"];
   // final supabaseAnonKeyDebug = dotenv.env["SUPABASE_ANONKEY"];
 
-  const supabaseUrl = String.fromEnvironment('SUPABASE_ANONKEY');
-  const supabaseAnonKey = String.fromEnvironment('SUPABASE_URL');
+  const supabaseUrl = String.fromEnvironment('SUPABASE_URL');
+  const supabaseAnonKey = String.fromEnvironment('SUPABASE_ANONKEY');
 
   await Supabase.initialize(
     url: supabaseUrl,
