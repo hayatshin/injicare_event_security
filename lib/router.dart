@@ -17,7 +17,7 @@ final routerProvider = Provider((ref) {
         routes: [
           GoRoute(
             name: "eventDetail",
-            path: ":userId",
+            path: ":userId/:eventId",
             pageBuilder: (context, state) {
               final userId = state.pathParameters["userId"];
               final eventId = state.pathParameters["eventId"];
