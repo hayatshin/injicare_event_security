@@ -6,7 +6,7 @@ on:
 jobs:
 
   PROD:
-      runs-on: macos-latest
+      runs-on: ubuntu-latest
       environment: PROD
       steps:
         - uses: actions/checkout@v2
