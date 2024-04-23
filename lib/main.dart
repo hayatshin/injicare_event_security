@@ -5,17 +5,17 @@ import 'package:injicare_event/router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
-  const supabaseUrl =
-      String.fromEnvironment('SUPABASE_URL', defaultValue: "check1");
-  const supabaseAnonKey =
-      String.fromEnvironment('SUPABASE_ANONKEY', defaultValue: "check2");
+  WidgetsFlutterBinding.ensureInitialized();
+
+  const supabaseUrl = String.fromEnvironment('SUPABASE_URL');
+  const supabaseAnonKey = String.fromEnvironment('SUPABASE_ANONKEY');
+
   await Supabase.initialize(
     url: supabaseUrl,
     anonKey: supabaseAnonKey,
   );
 
   // setPathUrlStrategy();
-  WidgetsFlutterBinding.ensureInitialized();
 
   runApp(
     const ProviderScope(
