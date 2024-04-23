@@ -7,8 +7,10 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  const supabaseUrl = String.fromEnvironment('SUPABASE_URL');
-  const supabaseAnonKey = String.fromEnvironment('SUPABASE_ANONKEY');
+  const supabaseUrl =
+      String.fromEnvironment('SUPABASE_URL', defaultValue: "url");
+  const supabaseAnonKey =
+      String.fromEnvironment('SUPABASE_ANONKEY', defaultValue: "anonkey");
 
   await Supabase.initialize(
     url: supabaseUrl,

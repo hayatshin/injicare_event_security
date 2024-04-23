@@ -15,9 +15,10 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    const supabaseUrl = String.fromEnvironment('SUPABASE_URL');
-    const supabaseAnonKey = String.fromEnvironment('SUPABASE_ANONKEY');
-
+    const supabaseUrl =
+        String.fromEnvironment('SUPABASE_URL', defaultValue: "url");
+    const supabaseAnonKey =
+        String.fromEnvironment('SUPABASE_ANONKEY', defaultValue: "anonkey");
     return const Scaffold(
       body: Row(
         children: [
