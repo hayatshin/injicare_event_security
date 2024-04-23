@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:injicare_event/constants/sizes.dart';
 import 'package:injicare_event/router.dart';
@@ -7,20 +6,18 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:url_strategy/url_strategy.dart';
 
 void main() async {
-  await dotenv.load();
+  // await dotenv.load();
 
-  final supabaseUrlDebug = dotenv.env["SUPABASE_URL"];
-  final supabaseAnonKeyDebug = dotenv.env["SUPABASE_ANONKEY"];
+  // final supabaseUrlDebug = dotenv.env["SUPABASE_URL"];
+  // final supabaseAnonKeyDebug = dotenv.env["SUPABASE_ANONKEY"];
 
-  // const supabaseUrl = String.fromEnvironment('SUPABASE_URL');
-  // const supabaseAnonKey = String.fromEnvironment('SUPABASE_ANONKEY');
+  const supabaseUrl = String.fromEnvironment('SUPABASE_URL');
+  const supabaseAnonKey = String.fromEnvironment('SUPABASE_ANONKEY');
 
-  if (supabaseUrlDebug != null && supabaseAnonKeyDebug != null) {
-    await Supabase.initialize(
-      url: supabaseUrlDebug,
-      anonKey: supabaseAnonKeyDebug,
-    );
-  }
+  await Supabase.initialize(
+    url: supabaseUrl,
+    anonKey: supabaseAnonKey,
+  );
 
   setPathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();

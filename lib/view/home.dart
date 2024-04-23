@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -11,15 +10,20 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    final supabaseUrlDebug = dotenv.env["SUPABASE_URL"];
-    final supabaseAnonKeyDebug = dotenv.env["SUPABASE_ANONKEY"];
-
-    return Scaffold(
-      body: Column(
+    const supabaseUrl =
+        String.fromEnvironment('envkey_SUPABASE_URL', defaultValue: "check1");
+    const supabaseAnonKey = String.fromEnvironment('envkey_SUPABASE_ANONKEY',
+        defaultValue: "check2");
+    return const Scaffold(
+      body: Row(
         children: [
-          const Text("check"),
-          Text(supabaseUrlDebug ?? "no supabaseUrlDebug"),
-          Text(supabaseAnonKeyDebug ?? "no supabaseAnonKey"),
+          Column(
+            children: [
+              Text("check"),
+              Text(supabaseUrl),
+              Text(supabaseAnonKey),
+            ],
+          ),
         ],
       ),
     );
