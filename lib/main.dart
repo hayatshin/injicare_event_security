@@ -7,7 +7,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:url_strategy/url_strategy.dart';
 
 void main() async {
-  await dotenv.load(fileName: ".env");
+  await dotenv.load();
 
   final supabaseUrlDebug = dotenv.env["SUPABASE_URL"];
   final supabaseAnonKeyDebug = dotenv.env["SUPABASE_ANONKEY"];
