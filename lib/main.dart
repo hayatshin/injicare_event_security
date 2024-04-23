@@ -3,7 +3,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:injicare_event/constants/sizes.dart';
 import 'package:injicare_event/router.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:url_strategy/url_strategy.dart';
 
 void main() async {
@@ -15,10 +14,10 @@ void main() async {
   const supabaseUrl = String.fromEnvironment('SUPABASE_URL');
   const supabaseAnonKey = String.fromEnvironment('SUPABASE_ANONKEY');
 
-  await Supabase.initialize(
-    url: supabaseUrlDebug ?? "",
-    anonKey: supabaseAnonKeyDebug ?? "",
-  );
+  // await Supabase.initialize(
+  //   url: supabaseUrlDebug ?? "",
+  //   anonKey: supabaseAnonKeyDebug ?? "",
+  // );
 
   setPathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
