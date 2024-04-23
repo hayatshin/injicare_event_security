@@ -25,7 +25,7 @@ final routerProvider = Provider((ref) {
               if (userId != null && eventId != null) {
                 return NoTransitionPage(
                   child: NavigatorScreen(
-                    eventId: "",
+                    eventId: eventId,
                     userId: userId,
                   ),
                 );
