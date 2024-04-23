@@ -7,6 +7,7 @@ jobs:
 
   PROD:
       runs-on: macos-latest
+      environment: PROD
       steps:
         - uses: actions/checkout@v2
         - name: Create environment file
@@ -16,14 +17,8 @@ jobs:
             envkey_SUPABASE_ANONKEY: ${{ secrets.SUPABASE_ANONKEY }}
         - name: Display .env
           run: cat .env
-        # - name: Create env file
-        #   run: |
-        #     touch .env
-        #     echo SUPABASE_URL=${{ secrets.SUPABASE_URL }} > .env
-        #     echo SUPABASE_ANONKEY=${{ secrets.SUPABASE_ANONKEY }} > .env
-        #     cat .env
         - uses: subosito/flutter-action@v1
         - uses: bluefireteam/flutter-gh-pages@v7
           with:
-            baseHref: /injicare_event/
+            baseHref: /injicare-event/
           
