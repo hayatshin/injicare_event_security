@@ -2,17 +2,22 @@ name: gh-pages
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
     steps:
       - uses: actions/checkout@v2
+      - name: Create environment file
+        uses: SpicyPizza/create-envfile@v2.0
+        with:
+          envkey_DEBUG: false
+          envkey_ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
+          envkey_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          envkey_SUPABASE_ANONKEY: ${{ secrets.SUPABASE_ANONKEY }}
       - uses: subosito/flutter-action@v1
       - uses: bluefireteam/flutter-gh-pages@v7
         with:
           baseHref: /injicare-event/
-        env:
-          SUPABASE_URL: ${{secrets.SUPABASE_URL}}
-          SUPABASE_ANONKEY: ${{secrets.SUPABASE_ANONKEY}}
