@@ -72,8 +72,8 @@ class _NavigatorScreenState extends ConsumerState<NavigatorScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Text("home"),
+    return Scaffold(
+      body: Text(widget.userId),
     );
   }
 }

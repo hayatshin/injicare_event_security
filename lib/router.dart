@@ -17,7 +17,7 @@ final routerProvider = Provider((ref) {
         routes: [
           GoRoute(
             name: "eventDetail",
-            path: ":userId/:eventId",
+            path: ":userId",
             pageBuilder: (context, state) {
               final userId = state.pathParameters["userId"];
               final eventId = state.pathParameters["eventId"];
@@ -25,7 +25,7 @@ final routerProvider = Provider((ref) {
               if (userId != null && eventId != null) {
                 return NoTransitionPage(
                   child: NavigatorScreen(
-                    eventId: eventId,
+                    eventId: "",
                     userId: userId,
                   ),
                 );
