@@ -43,8 +43,10 @@ class _HomeState extends State<Home> {
           Column(
             children: [
               const Text("check"),
-              Text(url),
-              Text(anonkey),
+              Text(".env 1 -> $url"),
+              Text(".env 2 -> $anonkey"),
+              const Text("String 3 -> $supabaseUrl"),
+              const Text("String 4 -> $supabaseAnonKey"),
             ],
           ),
         ],

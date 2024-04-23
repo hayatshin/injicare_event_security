@@ -7,19 +7,18 @@ jobs:
 
   PROD:
       runs-on: ubuntu-latest
-      environment: PROD
       steps:
         - uses: actions/checkout@v2
-        # - name: Create environment file
-          # uses: SpicyPizza/create-envfile@v2.0
-          # with:
-          #   envkey_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          #   envkey_SUPABASE_ANONKEY: ${{ secrets.SUPABASE_ANONKEY }}
+        - name: Create environment file
+          uses: SpicyPizza/create-envfile@v2.0
+          with:
+            envkey_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+            envkey_SUPABASE_ANONKEY: ${{ secrets.SUPABASE_ANONKEY }}
         - name: Create env file
           run: |
             touch .env
             echo SUPABASE_URL=${{ secrets.SUPABASE_URL }} > .env
-            echo SUPABASE_URL=${{ secrets.SUPABASE_ANONKEY }} > .env
+            echo SUPABASE_ANONKEY=${{ secrets.SUPABASE_ANONKEY }} > .env
             cat .env
         - uses: subosito/flutter-action@v1
         - uses: bluefireteam/flutter-gh-pages@v7
