@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_skeleton_ui/flutter_skeleton_ui.dart';
-import 'package:injicare_event/constants/sizes.dart';
+import 'package:injicare_event/injicare_font.dart';
 
 class ErrorScreen extends StatelessWidget {
   const ErrorScreen({super.key});
@@ -43,11 +43,8 @@ class ErrorScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "오류가 발생했습니다.\n인지케어팀에 문의해주세요.",
-                          style: TextStyle(
-                            fontSize: Sizes.size12,
-                            color: Colors.blueGrey.shade700,
-                          ),
+                          "오류가 발생했습니다\n인지케어팀에 문의해주세요",
+                          style: InjicareFont().body01,
                           textAlign: TextAlign.center,
                         ),
                       ],
