@@ -12,14 +12,14 @@ jobs:
       - uses: bluefireteam/flutter-gh-pages@v7
         with:
           baseHref: /injicare-event/
-      - name: Create.env
-        shell: bash
-        env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_ANONKEY: ${{ secrets.SUPABASE_ANONKEY }}
-        run: |
-          touch env.json
-          echo '{
-            "SUPABASE_URL" : "${{ secrets.SUPABASE_URL }}",
-            "SUPABASE_ANONKEY" : "${{ secrets.SUPABASE_ANONKEY }}"
-          }' > env.json
+    #   - name: Create.env
+    #     shell: bash
+    #     env:
+    #       SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+    #       SUPABASE_ANONKEY: ${{ secrets.SUPABASE_ANONKEY }}
+    #     run: |
+    #       touch env.json
+    #       echo '{
+    #         "SUPABASE_URL" : "${{ secrets.SUPABASE_URL }}",
+    #         "SUPABASE_ANONKEY" : "${{ secrets.SUPABASE_ANONKEY }}"
+    #       }' > env.json
