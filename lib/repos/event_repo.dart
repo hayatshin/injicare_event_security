@@ -201,7 +201,7 @@ class EventRepository {
   Future<Map<String, dynamic>> fetchCertainEvent(String eventId) async {
     final data = await _supabase
         .from("events")
-        .select("*")
+        .select("*, quiz_event_db(*)")
         .eq("eventId", eventId)
         .single();
     return data;

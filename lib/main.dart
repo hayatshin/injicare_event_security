@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:injicare_event/constants/sizes.dart';
 import 'package:injicare_event/router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:url_strategy/url_strategy.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,7 +18,7 @@ void main() async {
     anonKey: supabaseAnonKeyDebug!,
   );
 
-  // setPathUrlStrategy();
+  setPathUrlStrategy();
 
   runApp(
     const ProviderScope(
@@ -32,7 +33,7 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
-      routerConfig: ref.watch(routerProvider),
+      routerConfig: router,
       // routeInformationParser: MyRouteInformationParser(),
       title: 'Onldocc Flutter App',
       debugShowCheckedModeBanner: false,

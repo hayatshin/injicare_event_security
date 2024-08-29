@@ -71,7 +71,7 @@ class EventDetailTemplate extends StatelessWidget {
                         Navigator.of(context).pop();
                       },
                       child: SvgPicture.asset(
-                        "assets/svg_2/circle-chevron-left-regular.svg",
+                        "assets/svg/circle-chevron-left-regular.svg",
                         width: 40,
                       ),
                     ),
