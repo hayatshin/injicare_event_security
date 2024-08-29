@@ -13,7 +13,7 @@ jobs:
           flutter-version: "3.22.2"
       - uses: bluefireteam/flutter-gh-pages@v7
         with:
-          baseHref: /injicare_event/
+          baseHref: /injicare-event/
       - name: Create.env
         shell: bash
         env:
