@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:injicare_event/view/default_screen.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -15,22 +16,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    const supabaseUrl =
-        String.fromEnvironment('SUPABASE_URL', defaultValue: "url");
-    const supabaseAnonKey =
-        String.fromEnvironment('SUPABASE_ANONKEY', defaultValue: "anonkey");
-    return const Scaffold(
-      body: Row(
-        children: [
-          Column(
-            children: [
-              Text("check"),
-              Text(supabaseUrl),
-              Text(supabaseAnonKey),
-            ],
-          ),
-        ],
-      ),
-    );
+    return const DefaultScreen();
   }
 }

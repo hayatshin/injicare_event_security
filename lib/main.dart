@@ -39,7 +39,7 @@ class MyApp extends ConsumerWidget {
       themeMode: ThemeMode.system,
       theme: ThemeData(
         useMaterial3: true,
-        fontFamily: "NanumSquare",
+        fontFamily: "Pretendard",
         textTheme: Typography.blackMountainView,
         scaffoldBackgroundColor: Colors.white,
         colorScheme: const ColorScheme.light(
@@ -53,14 +53,14 @@ class MyApp extends ConsumerWidget {
           elevation: 5.0,
           surfaceTintColor: Colors.grey.shade200,
           indicatorColor: Colors.pinkAccent.shade100.withOpacity(0.1),
-          labelTextStyle: MaterialStateProperty.all(
+          labelTextStyle: WidgetStateProperty.all(
             TextStyle(
               fontSize: Sizes.size16,
               fontWeight: FontWeight.w600,
               color: Colors.grey.shade700,
             ),
           ),
-          iconTheme: MaterialStateProperty.all(
+          iconTheme: WidgetStateProperty.all(
             IconThemeData(
               color: Colors.grey.shade700,
             ),
@@ -90,14 +90,14 @@ class MyApp extends ConsumerWidget {
           elevation: 5.0,
           // surfaceTintColor: Colors.grey.shade100,
           indicatorColor: Colors.pinkAccent.shade100.withOpacity(0.1),
-          labelTextStyle: MaterialStateProperty.all(
+          labelTextStyle: WidgetStateProperty.all(
             TextStyle(
               fontSize: Sizes.size16,
               fontWeight: FontWeight.w600,
               color: Colors.grey.shade400,
             ),
           ),
-          iconTheme: MaterialStateProperty.all(
+          iconTheme: WidgetStateProperty.all(
             IconThemeData(
               color: Colors.grey.shade400,
             ),

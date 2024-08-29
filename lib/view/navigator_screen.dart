@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:injicare_event/models/event_model.dart';
 import 'package:injicare_event/models/user_profile.dart';
+import 'package:injicare_event/view/default_screen.dart';
+import 'package:injicare_event/view/error_screen.dart';
 import 'package:injicare_event/view/event_detail_count_screen.dart';
 import 'package:injicare_event/view/event_detail_multiple_scores_screen.dart';
+import 'package:injicare_event/view/event_detail_quiz_screen.dart';
 import 'package:injicare_event/view/event_detail_target_score_screen.dart';
 import 'package:injicare_event/view_models/event_view_model.dart';
 import 'package:injicare_event/view_models/user_provider.dart';
@@ -57,7 +60,7 @@ class _NavigatorScreenState extends ConsumerState<NavigatorScreen> {
           ),
         ),
       );
-    } else {
+    } else if (eventModel.eventType == "count") {
       if (!mounted) return;
       Navigator.of(context).push(
         MaterialPageRoute(
@@ -67,13 +70,28 @@ class _NavigatorScreenState extends ConsumerState<NavigatorScreen> {
           ),
         ),
       );
+    } else if (eventModel.eventType == "quiz") {
+      if (!mounted) return;
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => EventDetailQuizScreen(
+            eventModel: eventModel,
+            userProfile: userProfile,
+          ),
+        ),
+      );
+    } else {
+      if (!mounted) return;
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => const ErrorScreen(),
+        ),
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Text(widget.userId),
-    );
+    return const DefaultScreen();
   }
 }

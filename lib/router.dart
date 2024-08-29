@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:injicare_event/view/error_screen.dart';
 import 'package:injicare_event/view/home.dart';
 import 'package:injicare_event/view/navigator_screen.dart';
 
@@ -31,11 +32,18 @@ final routerProvider = Provider((ref) {
                 );
               }
               return const NoTransitionPage(
-                child: Home(),
+                child: ErrorScreen(),
               );
             },
           ),
         ],
+      ),
+      GoRoute(
+        path: "/close",
+        pageBuilder: (context, state) => NoTransitionPage(
+          key: state.pageKey,
+          child: const Home(),
+        ),
       ),
     ],
   );

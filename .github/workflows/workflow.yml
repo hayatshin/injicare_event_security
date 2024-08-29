@@ -4,21 +4,24 @@ on:
   push:
     branches: [main]
 jobs:
-
-  PROD:
-      runs-on: ubuntu-latest
-      environment: PROD
-      steps:
-        - uses: actions/checkout@v2
-        - name: Create environment file
-          uses: SpicyPizza/create-envfile@v2.0
-          with:
-            envkey_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-            envkey_SUPABASE_ANONKEY: ${{ secrets.SUPABASE_ANONKEY }}
-        - name: Display .env
-          run: cat .env
-        - uses: subosito/flutter-action@v1
-        - uses: bluefireteam/flutter-gh-pages@v7
-          with:
-            baseHref: /injicare-event/
-          
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v1
+        with:
+          flutter-version: "3.22.2"
+      - uses: bluefireteam/flutter-gh-pages@v7
+        with:
+          baseHref: /injicare_event/
+      - name: Create.env
+        shell: bash
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANONKEY: ${{ secrets.SUPABASE_ANONKEY }}
+        run: |
+          touch env.json
+          echo '{
+            "SUPABASE_URL" : "${{ secrets.SUPABASE_URL }}",
+            "SUPABASE_ANONKEY" : "${{ secrets.SUPABASE_ANONKEY }}"
+          }' > env.json

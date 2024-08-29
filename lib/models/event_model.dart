@@ -54,6 +54,14 @@ class EventModel {
   final int? maxLikeCount;
   final int? maxInvitationCount;
 
+  final String? quizEventId;
+  final String? quiz;
+  final String? firstChoice;
+  final String? secondChoice;
+  final String? thirdChoice;
+  final String? fourthChoice;
+  final int? quizAnswer;
+
   EventModel({
     required this.allUsers,
     this.contractRegionId,
@@ -102,6 +110,13 @@ class EventModel {
     this.maxCommentCount,
     this.maxLikeCount,
     this.maxInvitationCount,
+    this.quizEventId,
+    this.quiz,
+    this.firstChoice,
+    this.secondChoice,
+    this.thirdChoice,
+    this.fourthChoice,
+    this.quizAnswer,
   });
 
   EventModel.fromJson(Map<String, dynamic> json)
@@ -163,10 +178,31 @@ class EventModel {
         leftDays = getEventLeftDaysFromNow(json["endDate"]),
         participantsNumber = 0,
         ageLimit = json["ageLimit"] ?? 0,
-        maxStepCount = json["maxStepCount"] ?? 10000,
+        maxStepCount = json["maxStepCount"] ?? 7000,
         maxCommentCount = json["maxCommentCount"] ?? 0,
         maxLikeCount = json["maxLikeCount"] ?? 0,
-        maxInvitationCount = json["maxInvitationCount"] ?? 0;
+        maxInvitationCount = json["maxInvitationCount"] ?? 0,
+        quizEventId = json["quiz_event_db"].isNotEmpty
+            ? json["quiz_event_db"][0]["quizEventId"]
+            : "",
+        quiz = json["quiz_event_db"].isNotEmpty
+            ? json["quiz_event_db"][0]["quiz"]
+            : "",
+        firstChoice = json["quiz_event_db"].isNotEmpty
+            ? json["quiz_event_db"][0]["firstChoice"]
+            : "",
+        secondChoice = json["quiz_event_db"].isNotEmpty
+            ? json["quiz_event_db"][0]["secondChoice"]
+            : "",
+        thirdChoice = json["quiz_event_db"].isNotEmpty
+            ? json["quiz_event_db"][0]["thirdChoice"]
+            : "",
+        fourthChoice = json["quiz_event_db"].isNotEmpty
+            ? json["quiz_event_db"][0]["fourthChoice"]
+            : "",
+        quizAnswer = json["quiz_event_db"].isNotEmpty
+            ? json["quiz_event_db"][0]["quizAnswer"]
+            : 0;
 
   Map<String, dynamic> toJson() {
     return {
@@ -300,6 +336,13 @@ class EventModel {
       maxCommentCount: maxCommentCount ?? this.maxCommentCount,
       maxLikeCount: maxLikeCount ?? this.maxLikeCount,
       maxInvitationCount: maxInvitationCount ?? this.maxInvitationCount,
+      quizEventId: quizEventId,
+      quiz: quiz,
+      firstChoice: firstChoice,
+      secondChoice: secondChoice,
+      thirdChoice: thirdChoice,
+      fourthChoice: fourthChoice,
+      quizAnswer: quizAnswer,
     );
   }
 
@@ -350,5 +393,12 @@ class EventModel {
         maxStepCount = 10000,
         maxCommentCount = 0,
         maxLikeCount = 0,
-        maxInvitationCount = 0;
+        maxInvitationCount = 0,
+        quizEventId = "",
+        quiz = "",
+        firstChoice = "",
+        secondChoice = "",
+        thirdChoice = "",
+        fourthChoice = "",
+        quizAnswer = 0;
 }
