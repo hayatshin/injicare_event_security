@@ -10,7 +10,6 @@ final router = GoRouter(
       name: "home",
       path: "/",
       pageBuilder: (context, state) {
-        print("home");
         return NoTransitionPage(
           key: state.pageKey,
           child: const Home(),
@@ -43,7 +42,6 @@ final router = GoRouter(
       name: "close",
       path: "/close",
       pageBuilder: (context, state) {
-        print("close");
         return NoTransitionPage(
           key: state.pageKey,
           child: const Home(),
