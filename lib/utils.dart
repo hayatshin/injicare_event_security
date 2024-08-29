@@ -10,8 +10,6 @@ import 'package:injicare_event/constants/sizes.dart';
 import 'package:injicare_event/injicare_color.dart';
 import 'package:injicare_event/injicare_font.dart';
 import 'package:intl/intl.dart';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:timezone/data/latest.dart' as tz;
