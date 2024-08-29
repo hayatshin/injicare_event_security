@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -149,37 +148,6 @@ void showSnackBar(BuildContext context, String message) {
       ),
     ),
   );
-}
-
-Future<File?> copyImageToAppDir(String sourcePath) async {
-  try {
-    final appDir = await getApplicationDocumentsDirectory();
-    final newImagePath =
-        '${appDir.path}/image.png'; // Provide a desired file name and extension
-
-    final file = File(sourcePath);
-    File newFile = await file.copy(newImagePath);
-    return newFile;
-    // Now, use newImagePath to display the image.
-  } catch (e) {
-    // ignore: avoid_print
-    print('Error copying image: $e');
-  }
-  return null;
-}
-
-Future<File> getLocalFile(String relativePath) async {
-  Directory appDocDir = await getApplicationDocumentsDirectory();
-  String appDocPath = appDocDir.path;
-  String absolutePath = join(appDocPath, relativePath);
-
-  return File(absolutePath);
-}
-
-void closeKeyboard(BuildContext context) {
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    FocusScope.of(context).requestFocus(FocusNode());
-  });
 }
 
 void slidePushRemoveNavigation(BuildContext context, Widget nextScreen) {
@@ -736,4 +704,10 @@ Future<void> showCompletingSnackBar(
       ),
     ),
   );
+}
+
+void closeKeyboard(BuildContext context) {
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    FocusScope.of(context).requestFocus(FocusNode());
+  });
 }
