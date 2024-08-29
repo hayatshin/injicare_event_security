@@ -1,50 +1,54 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injicare_event/view/error_screen.dart';
 import 'package:injicare_event/view/home.dart';
 import 'package:injicare_event/view/navigator_screen.dart';
 
-final routerProvider = Provider((ref) {
-  return GoRouter(
-    initialLocation: "/",
-    routes: [
-      GoRoute(
-        name: "home",
-        path: "/",
-        pageBuilder: (context, state) => NoTransitionPage(
+final router = GoRouter(
+  initialLocation: "/",
+  routes: [
+    GoRoute(
+      name: "home",
+      path: "/",
+      pageBuilder: (context, state) {
+        print("home");
+        return NoTransitionPage(
           key: state.pageKey,
           child: const Home(),
-        ),
-        routes: [
-          GoRoute(
-            name: "eventDetail",
-            path: ":userId/:eventId",
-            pageBuilder: (context, state) {
-              final userId = state.pathParameters["userId"];
-              final eventId = state.pathParameters["eventId"];
+        );
+      },
+      routes: [
+        GoRoute(
+          name: "eventDetail",
+          path: ":userId/:eventId",
+          pageBuilder: (context, state) {
+            final userId = state.pathParameters["userId"];
+            final eventId = state.pathParameters["eventId"];
 
-              if (userId != null && eventId != null) {
-                return NoTransitionPage(
-                  child: NavigatorScreen(
-                    eventId: eventId,
-                    userId: userId,
-                  ),
-                );
-              }
-              return const NoTransitionPage(
-                child: ErrorScreen(),
+            if (userId != null && eventId != null) {
+              return NoTransitionPage(
+                child: NavigatorScreen(
+                  eventId: eventId,
+                  userId: userId,
+                ),
               );
-            },
-          ),
-        ],
-      ),
-      GoRoute(
-        path: "/close",
-        pageBuilder: (context, state) => NoTransitionPage(
+            }
+            return const NoTransitionPage(
+              child: ErrorScreen(),
+            );
+          },
+        ),
+      ],
+    ),
+    GoRoute(
+      name: "close",
+      path: "/close",
+      pageBuilder: (context, state) {
+        print("close");
+        return NoTransitionPage(
           key: state.pageKey,
           child: const Home(),
-        ),
-      ),
-    ],
-  );
-});
+        );
+      },
+    ),
+  ],
+);
