@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:injicare_event/constants/http.dart';
+import 'package:injicare_event/models/quiz_answer_model.dart';
 import 'package:injicare_event/utils.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -106,7 +107,6 @@ class EventRepository {
 
     if (response.statusCode == 200) {
       final data = jsonDecode(utf8.decode(response.bodyBytes));
-
       return data["data"];
     }
 
@@ -401,6 +401,66 @@ class EventRepository {
       // ignore: avoid_print
       print("submitEventGift -> $e");
     }
+  }
+
+  // quiz-event
+  Future<List<Map<String, dynamic>>> checkMyParticiapationQuizEvent(
+      String eventId, String userId) async {
+    try {
+      final data = await _supabase
+          .from("quiz_event_answers")
+          .select('*')
+          .eq('eventId', eventId)
+          .eq('userId', userId);
+
+      return data;
+    } catch (e) {
+      // ignore: avoid_print
+      print("checkMyParticiapationQuizEvent -> $e");
+    }
+    return [];
+  }
+
+  Future<void> saveQuizEventAnswer(QuizAnswerModel model) async {
+    try {
+      await _supabase.from("quiz_event_answers").insert(model.toJson());
+    } catch (e) {
+      // ignore: avoid_print
+      print("saveQuizEventAnswer -> $e");
+    }
+  }
+
+  Future<int> checkParticipantsQuizCount(String eventId) async {
+    try {
+      final res = await _supabase
+          .from("quiz_event_answers")
+          .select('userId')
+          .count(CountOption.exact);
+      return res.count;
+    } catch (e) {
+      return 0;
+    }
+  }
+
+  Future<int> fetchAllParticipantsQuizCount(String eventId) async {
+    try {
+      final data = await _supabase
+          .from("quiz_event_answers")
+          .select('*')
+          .eq('eventId', eventId);
+      return data.length;
+    } catch (e) {
+      return 0;
+    }
+  }
+
+  Future<List<dynamic>> fetchCertainQuizEventAnswers(String eventId) async {
+    final data = await _supabase
+        .from("quiz_event_answers")
+        .select('*, users(name)')
+        .eq("eventId", eventId)
+        .order("createdAt", ascending: true);
+    return data;
   }
 }
 

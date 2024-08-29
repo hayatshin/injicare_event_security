@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:injicare_event/models/contract_region_model.dart';
 import 'package:injicare_event/models/event_model.dart';
+import 'package:injicare_event/models/quiz_answer_model.dart';
 import 'package:injicare_event/models/user_profile.dart';
 import 'package:injicare_event/repos/authentication_repo.dart';
 import 'package:injicare_event/repos/event_repo.dart';
@@ -99,7 +100,7 @@ class EventViewModel extends AsyncNotifier<void> {
           participantsNumber: participantsNumber,
         );
         return scorePointModel;
-      } else {
+      } else if (eventModel.eventType == "count") {
         final data = await _eventRepo.getEventUserCount(
           userStartSeconds,
           endSeconds,
@@ -189,6 +190,30 @@ class EventViewModel extends AsyncNotifier<void> {
   Future<EventModel> fetchCertainEvent(String eventId) async {
     final data = await ref.read(eventRepo).fetchCertainEvent(eventId);
     return EventModel.fromJson(data);
+  }
+
+  Future<EventModel> updateUserQuizState(EventModel eventModel) async {
+    int participantsNumber =
+        await _eventRepo.fetchAllParticipantsQuizCount(eventModel.eventId);
+
+    final updateEventModel = eventModel.copyWith(
+      participantsNumber: participantsNumber,
+    );
+
+    return updateEventModel;
+  }
+
+  Future<List<QuizAnswerModel>> fetchCertainQuizEventAnswers(
+      String eventId) async {
+    try {
+      final data =
+          await ref.read(eventRepo).fetchCertainQuizEventAnswers(eventId);
+      return data.map((e) => QuizAnswerModel.fromJson(e)).toList();
+    } catch (e) {
+      // ignore: avoid_print
+      print("fetchCertainQuizEventAnswers -> $e");
+    }
+    return [];
   }
 }
 

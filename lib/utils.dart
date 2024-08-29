@@ -3,8 +3,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:http/http.dart' as http;
+import 'package:injicare_event/constants/gaps.dart';
 import 'package:injicare_event/constants/sizes.dart';
+import 'package:injicare_event/injicare_color.dart';
+import 'package:injicare_event/injicare_font.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -631,4 +635,107 @@ Future<void> initializeSupabase() async {
       anonKey: dotenv.env["SUPABASE_ANONKEY"]!,
     );
   }
+}
+
+Future<void> showWarningSnackBar(BuildContext context, String message) async {
+  if (!context.mounted) return;
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      // showCloseIcon: true,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      padding: const EdgeInsets.symmetric(
+        vertical: 20,
+        horizontal: 16,
+      ),
+      duration: const Duration(
+        milliseconds: 1500,
+      ),
+      content: Container(
+        decoration: BoxDecoration(
+          color: InjicareColor(context: context).gray100.withOpacity(0.8),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 10,
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                "assets/svg/warning.svg",
+                width: 15,
+              ),
+              Gaps.h10,
+              Flexible(
+                child: Text(
+                  message,
+                  style: InjicareFont().body03.copyWith(
+                        color: isDarkMode(context)
+                            ? InjicareColor(context: context).gray10
+                            : Colors.white,
+                      ),
+                  overflow: TextOverflow.visible,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+Future<void> showCompletingSnackBar(
+    BuildContext context, String message) async {
+  if (!context.mounted) return;
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      // showCloseIcon: true,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      padding: const EdgeInsets.symmetric(
+        vertical: 20,
+        horizontal: 16,
+      ),
+      duration: const Duration(
+        milliseconds: 1500,
+      ),
+      content: Container(
+        decoration: BoxDecoration(
+          color: InjicareColor(context: context).gray100.withOpacity(0.8),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 10,
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                "assets/svg/circle-check.svg",
+                width: 15,
+              ),
+              Gaps.h10,
+              Flexible(
+                child: Text(
+                  message,
+                  style: InjicareFont().body03.copyWith(
+                        color: isDarkMode(context)
+                            ? InjicareColor(context: context).gray10
+                            : Colors.white,
+                      ),
+                  overflow: TextOverflow.visible,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
 }
