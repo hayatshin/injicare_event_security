@@ -528,9 +528,15 @@ class _EventDetailPointScreenState
                     ),
           Gaps.v24,
           const EventHeader(headerText: "설명"),
-          Text(
-            widget.eventModel.description,
-            style: InjicareFont().body02,
+          Row(
+            children: [
+              Flexible(
+                child: Text(
+                  widget.eventModel.description,
+                  style: InjicareFont().body02,
+                ),
+              ),
+            ],
           ),
           const DividerWidget(),
           const EventHeader(headerText: "행사 개요"),
