@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_skeleton_ui/flutter_skeleton_ui.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:injicare_event/constants/gaps.dart';
 import 'package:injicare_event/constants/sizes.dart';
 import 'package:injicare_event/injicare_color.dart';
@@ -61,23 +60,23 @@ class EventDetailTemplate extends StatelessWidget {
                   color: Colors.white.withOpacity(0.4),
                 ),
               ),
-              Positioned(
-                top: 20,
-                left: 16,
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: SvgPicture.asset(
-                        "assets/svg/circle-chevron-left-regular.svg",
-                        width: 40,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              // Positioned(
+              //   top: 20,
+              //   left: 16,
+              //   child: Row(
+              //     children: [
+              //       GestureDetector(
+              //         onTap: () {
+              //           Navigator.of(context).pop();
+              //         },
+              //         child: SvgPicture.asset(
+              //           "assets/svg/circle-chevron-left-regular.svg",
+              //           width: 40,
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
               Positioned(
                 top: 60,
                 left: 16,
