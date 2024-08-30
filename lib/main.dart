@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:injicare_event/constants/sizes.dart';
 import 'package:injicare_event/router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:url_strategy/url_strategy.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,8 +16,6 @@ void main() async {
     url: supabaseUrlDebug!,
     anonKey: supabaseAnonKeyDebug!,
   );
-
-  setPathUrlStrategy();
 
   runApp(
     const ProviderScope(
