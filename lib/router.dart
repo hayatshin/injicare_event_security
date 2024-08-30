@@ -5,9 +5,6 @@ import 'package:injicare_event/view/navigator_screen.dart';
 
 final router = GoRouter(
   initialLocation: "/",
-  redirect: (context, state) {
-    return null;
-  },
   routes: [
     GoRoute(
       name: "home",
