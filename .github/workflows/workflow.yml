@@ -12,8 +12,8 @@ jobs:
         with:
           channel: stable
       - uses: bluefireteam/flutter-gh-pages@v7
-        with:
-          baseHref: /injicare_event/
+        # with:
+        #   baseHref: /injicare_event/
       # - name: Create.env
       #   shell: bash
       #   env:
