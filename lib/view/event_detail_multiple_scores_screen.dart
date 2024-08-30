@@ -317,9 +317,15 @@ class _EventDetailPointScreenState
           const EventHeader(
             headerText: "설명",
           ),
-          Text(
-            widget.eventModel.description,
-            style: InjicareFont().body02,
+          Row(
+            children: [
+              Flexible(
+                child: Text(
+                  widget.eventModel.description,
+                  style: InjicareFont().body02,
+                ),
+              ),
+            ],
           ),
           const DividerWidget(),
           const EventHeader(

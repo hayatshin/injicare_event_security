@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_skeleton_ui/flutter_skeleton_ui.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:injicare_event/constants/gaps.dart';
 import 'package:injicare_event/constants/sizes.dart';
 
@@ -28,18 +27,6 @@ class DefaultScreen extends StatelessWidget {
               //     ),
               //   ),
               // ),
-              Positioned(
-                top: 20,
-                left: 16,
-                child: Row(
-                  children: [
-                    SvgPicture.asset(
-                      "assets/svg/circle-chevron-left-regular.svg",
-                      width: 40,
-                    ),
-                  ],
-                ),
-              ),
               // const Positioned(
               //   top: 20,
               //   left: 16,
