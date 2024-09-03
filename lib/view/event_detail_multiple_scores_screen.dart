@@ -626,7 +626,7 @@ class MyProgressPainter extends CustomPainter {
       radius: radius,
     );
     canvas.drawArc(
-        progressArcRect, startingAngle, progress * pi, false, redArcPaint);
+        progressArcRect, startingAngle, progress * 2 * pi, false, redArcPaint);
   }
 
   @override
