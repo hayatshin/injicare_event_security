@@ -92,6 +92,7 @@ flutter:
     - env
     - assets/svg/
     - assets/jpg/
+    - assets/anims/
     # - .env
     # - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
