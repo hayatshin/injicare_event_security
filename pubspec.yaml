@@ -93,6 +93,7 @@ flutter:
     - assets/svg/
     - assets/jpg/
     - assets/anims/
+    - assets/number/
     # - .env
     # - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
