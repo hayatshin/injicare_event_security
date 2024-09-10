@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:injicare_event/models/contract_region_model.dart';
 import 'package:injicare_event/models/event_model.dart';
+import 'package:injicare_event/models/photo_image_model.dart';
 import 'package:injicare_event/models/quiz_answer_model.dart';
 import 'package:injicare_event/models/user_profile.dart';
 import 'package:injicare_event/repos/authentication_repo.dart';
@@ -192,6 +193,7 @@ class EventViewModel extends AsyncNotifier<void> {
     return EventModel.fromJson(data);
   }
 
+  // quiz-event
   Future<EventModel> updateUserQuizState(EventModel eventModel) async {
     int participantsNumber =
         await _eventRepo.fetchAllParticipantsQuizCount(eventModel.eventId);
@@ -212,6 +214,31 @@ class EventViewModel extends AsyncNotifier<void> {
     } catch (e) {
       // ignore: avoid_print
       print("fetchCertainQuizEventAnswers -> $e");
+    }
+    return [];
+  }
+
+  // photo-event
+  Future<EventModel> updateUserPhotoEventState(EventModel eventModel) async {
+    int participantsNumber = await _eventRepo
+        .fetchAllParticipantsPhotoEventCount(eventModel.eventId);
+
+    final updateEventModel = eventModel.copyWith(
+      participantsNumber: participantsNumber,
+    );
+
+    return updateEventModel;
+  }
+
+  Future<List<PhotoImageModel>> fetchCertainPhotoEventImages(
+      String eventId) async {
+    try {
+      final data =
+          await ref.read(eventRepo).fetchCertainPhotoEventImages(eventId);
+      return data.map((e) => PhotoImageModel.fromJson(e)).toList();
+    } catch (e) {
+      // ignore: avoid_print
+      print("fetchCertainPhotoEventImages -> $e");
     }
     return [];
   }

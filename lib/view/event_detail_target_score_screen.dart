@@ -7,7 +7,6 @@ import 'package:injicare_event/injicare_color.dart';
 import 'package:injicare_event/injicare_font.dart';
 import 'package:injicare_event/models/event_model.dart';
 import 'package:injicare_event/models/user_profile.dart';
-import 'package:injicare_event/palette.dart';
 import 'package:injicare_event/repos/event_repo.dart';
 import 'package:injicare_event/utils.dart';
 import 'package:injicare_event/view/event_detail_multiple_scores_screen.dart';
@@ -411,107 +410,79 @@ class _EventDetailPointScreenState
                       : Stack(
                           children: [
                             if (stateEventModel.userAchieveOrNot ?? false)
-                              LottieBuilder.asset(
-                                "assets/anims/anim_fanfare.json",
+                              SizedBox(
+                                width: 500,
+                                height: 200,
+                                child: LottieBuilder.asset(
+                                  "assets/anims/anim_fanfare.json",
+                                ),
                               ),
                             Row(
                               children: [
                                 Expanded(
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: Theme.of(context)
-                                            .primaryColor
-                                            .withOpacity(0.4),
-                                      ),
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(10),
-                                      child: Column(
-                                        children: [
-                                          Text(
-                                            "나의 행사 달성 상황",
-                                            style:
-                                                InjicareFont().body03.copyWith(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10),
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          "나의 행사 달성 상황",
+                                          style: InjicareFont().body03.copyWith(
+                                                color: InjicareColor(
+                                                        context: context)
+                                                    .gray80,
+                                              ),
+                                        ),
+                                        Gaps.v5,
+                                        Text(
+                                          "→ ${stateEventModel.userTotalPoint}점",
+                                          style: InjicareFont().body01.copyWith(
+                                                color:
+                                                    InjicareColor().primary50,
+                                              ),
+                                        ),
+                                        // 달성 시
+                                        Gaps.v20,
+                                        if (stateEventModel.userAchieveOrNot ??
+                                            false)
+                                          Column(
+                                            children: [
+                                              Text(
+                                                "달성했습니다!",
+                                                textAlign: TextAlign.center,
+                                                style: InjicareFont()
+                                                    .body01
+                                                    .copyWith(
                                                       color: InjicareColor(
                                                               context: context)
-                                                          .gray80,
+                                                          .secondary50,
                                                     ),
-                                          ),
-                                          Gaps.v5,
-                                          Text(
-                                            "→ ${stateEventModel.userTotalPoint}점",
-                                            style: InjicareFont()
-                                                .body03
-                                                .copyWith(
-                                                  color:
-                                                      InjicareColor().primary50,
-                                                ),
-                                          ),
-                                          // 달성 시
-                                          Gaps.v20,
-                                          if (stateEventModel
-                                                  .userAchieveOrNot ??
-                                              false)
-                                            Column(
-                                              children: [
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.end,
-                                                  children: [
-                                                    SizedBox(
-                                                      width: 40,
-                                                      child:
-                                                          LottieBuilder.asset(
-                                                        "assets/anims/congratulation.json",
-                                                      ),
+                                              ),
+                                              Gaps.v20,
+                                              Text(
+                                                "아래 [누르고 선물 받기]\n버튼을 눌러서\n선물을 받아가세요",
+                                                textAlign: TextAlign.center,
+                                                style: InjicareFont()
+                                                    .body07
+                                                    .copyWith(
+                                                      color: InjicareColor(
+                                                              context: context)
+                                                          .secondary50,
                                                     ),
-                                                    Gaps.h5,
-                                                    Text(
-                                                      "달성했습니다!",
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: TextStyle(
-                                                        fontSize: 26,
-                                                        fontWeight:
-                                                            FontWeight.w800,
-                                                        color:
-                                                            isDarkMode(context)
-                                                                ? Palette()
-                                                                    .iconPurple
-                                                                : Palette()
-                                                                    .ocPurple,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                Gaps.v20,
-                                                Text(
-                                                  "아래 '누르고 선물 받기'\n버튼을 눌러서\n선물을 받아가세요~",
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    height: 1.2,
-                                                    color: isDarkMode(context)
-                                                        ? Palette().iconPurple
-                                                        : Palette().ocPurple,
-                                                  ),
-                                                ),
-                                                Gaps.v32,
-                                              ],
-                                            ),
-
-                                          // if (!stateEventModel
-                                          //     .userAchieveOrNot!)
-                                          MyProgressScreen(
-                                            eventModel: widget.eventModel,
-                                            userScore:
-                                                stateEventModel.userTotalPoint!,
+                                              ),
+                                              Gaps.v32,
+                                            ],
                                           ),
-                                        ],
-                                      ),
+                                        if (!stateEventModel.userAchieveOrNot!)
+                                          Column(
+                                            children: [
+                                              MyProgressScreen(
+                                                eventModel: widget.eventModel,
+                                                userScore: stateEventModel
+                                                    .userTotalPoint!,
+                                              ),
+                                            ],
+                                          ),
+                                      ],
                                     ),
                                   ),
                                 ),
@@ -523,6 +494,14 @@ class _EventDetailPointScreenState
                       size: size,
                       eventModel: widget.eventModel,
                     ),
+          Gaps.v24,
+          Container(
+            decoration: const BoxDecoration(),
+            child: Image.network(
+              widget.eventModel.eventImage,
+              fit: BoxFit.cover,
+            ),
+          ),
           Gaps.v24,
           const EventHeader(headerText: "설명"),
           Row(
@@ -629,14 +608,6 @@ class _EventDetailPointScreenState
                 ],
               ),
             ],
-          ),
-          Gaps.v24,
-          Container(
-            decoration: const BoxDecoration(),
-            child: Image.network(
-              widget.eventModel.eventImage,
-              fit: BoxFit.cover,
-            ),
           ),
         ],
       ),

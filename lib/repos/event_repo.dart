@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'package:injicare_event/constants/http.dart';
+import 'package:injicare_event/models/photo_image_model.dart';
 import 'package:injicare_event/models/quiz_answer_model.dart';
 import 'package:injicare_event/utils.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -457,6 +459,89 @@ class EventRepository {
   Future<List<dynamic>> fetchCertainQuizEventAnswers(String eventId) async {
     final data = await _supabase
         .from("quiz_event_answers")
+        .select('*, users(name)')
+        .eq("eventId", eventId)
+        .order("createdAt", ascending: true);
+    return data;
+  }
+
+  // photo-event
+  Future<String> uploadPhotoImageToStorage(
+      XFile photoImage, String eventId, String userId) async {
+    try {
+      final avatarBytes = await photoImage.readAsBytes();
+      final fileStoragePath = '$eventId/$userId';
+      await _supabase.storage
+          .from("photo_events")
+          .uploadBinary(fileStoragePath, avatarBytes,
+              fileOptions: const FileOptions(
+                upsert: true,
+              ));
+
+      final fileUrl =
+          _supabase.storage.from("photo_events").getPublicUrl(fileStoragePath);
+
+      return fileUrl;
+    } catch (e) {
+      // ignore: avoid_print
+      print("uploadPhotoImageToStorage -> $e");
+    }
+    return "";
+  }
+
+  Future<List<Map<String, dynamic>>> checkMyParticiapationPhotoEvent(
+      String eventId, String userId) async {
+    try {
+      final data = await _supabase
+          .from("photo_event_images")
+          .select('*')
+          .eq('eventId', eventId)
+          .eq('userId', userId);
+
+      return data;
+    } catch (e) {
+      // ignore: avoid_print
+      print("checkMyParticiapationPhotoEvent -> $e");
+    }
+    return [];
+  }
+
+  Future<void> savePhotoEventAnswer(PhotoImageModel model) async {
+    try {
+      await _supabase.from("photo_event_images").insert(model.toJson());
+    } catch (e) {
+      // ignore: avoid_print
+      print("savePhotoEventAnswer -> $e");
+    }
+  }
+
+  Future<int> checkParticipantsPhotoEventCount(String eventId) async {
+    try {
+      final res = await _supabase
+          .from("photo_event_images")
+          .select('userId')
+          .count(CountOption.exact);
+      return res.count;
+    } catch (e) {
+      return 0;
+    }
+  }
+
+  Future<int> fetchAllParticipantsPhotoEventCount(String eventId) async {
+    try {
+      final data = await _supabase
+          .from("photo_event_images")
+          .select('*')
+          .eq('eventId', eventId);
+      return data.length;
+    } catch (e) {
+      return 0;
+    }
+  }
+
+  Future<List<dynamic>> fetchCertainPhotoEventImages(String eventId) async {
+    final data = await _supabase
+        .from("photo_event_images")
         .select('*, users(name)')
         .eq("eventId", eventId)
         .order("createdAt", ascending: true);

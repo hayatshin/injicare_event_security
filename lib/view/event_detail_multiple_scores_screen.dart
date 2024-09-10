@@ -270,38 +270,28 @@ class _EventDetailPointScreenState
                         Row(
                           children: [
                             Expanded(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Theme.of(context)
-                                        .primaryColor
-                                        .withOpacity(0.4),
-                                  ),
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10),
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        "행사 기준 내 점수",
-                                        style: InjicareFont().body03.copyWith(
-                                              color: InjicareColor(
-                                                      context: context)
-                                                  .gray80,
-                                            ),
-                                      ),
-                                      Gaps.v5,
-                                      Text(
-                                        "→ ${stateEventModel.userTotalPoint}점",
-                                        style: InjicareFont().body02.copyWith(
-                                              color: InjicareColor().primary50,
-                                            ),
-                                      ),
-                                      // 달성 시
-                                      Gaps.v20,
-                                    ],
-                                  ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(10),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      "행사 기준 내 점수",
+                                      style: InjicareFont().body03.copyWith(
+                                            color:
+                                                InjicareColor(context: context)
+                                                    .gray80,
+                                          ),
+                                    ),
+                                    Gaps.v5,
+                                    Text(
+                                      "→ ${stateEventModel.userTotalPoint}점",
+                                      style: InjicareFont().body01.copyWith(
+                                            color: InjicareColor().primary50,
+                                          ),
+                                    ),
+                                    // 달성 시
+                                    Gaps.v20,
+                                  ],
                                 ),
                               ),
                             ),
@@ -313,6 +303,14 @@ class _EventDetailPointScreenState
                   size: size,
                   eventModel: widget.eventModel,
                 ),
+          Gaps.v24,
+          Container(
+            decoration: const BoxDecoration(),
+            child: Image.network(
+              widget.eventModel.eventImage,
+              fit: BoxFit.cover,
+            ),
+          ),
           Gaps.v24,
           const EventHeader(
             headerText: "설명",
@@ -452,14 +450,6 @@ class _EventDetailPointScreenState
                 ],
               ),
             ],
-          ),
-          Gaps.v24,
-          Container(
-            decoration: const BoxDecoration(),
-            child: Image.network(
-              widget.eventModel.eventImage,
-              fit: BoxFit.cover,
-            ),
           ),
         ],
       ),

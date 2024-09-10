@@ -7,7 +7,6 @@ import 'package:injicare_event/injicare_color.dart';
 import 'package:injicare_event/injicare_font.dart';
 import 'package:injicare_event/models/event_model.dart';
 import 'package:injicare_event/models/user_profile.dart';
-import 'package:injicare_event/palette.dart';
 import 'package:injicare_event/repos/event_repo.dart';
 import 'package:injicare_event/utils.dart';
 import 'package:injicare_event/view/event_detail_multiple_scores_screen.dart';
@@ -413,138 +412,123 @@ class _EventDetailCountScreenState
                       : Stack(
                           children: [
                             if (stateEventModel.userAchieveOrNot ?? false)
-                              LottieBuilder.asset(
-                                "assets/anims/anim_fanfare.json",
+                              SizedBox(
+                                width: 500,
+                                height: 200,
+                                child: LottieBuilder.asset(
+                                  "assets/anims/anim_fanfare.json",
+                                ),
                               ),
                             Row(
                               children: [
                                 Expanded(
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: Theme.of(context)
-                                            .primaryColor
-                                            .withOpacity(0.4),
-                                      ),
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(10),
-                                      child: Column(
-                                        children: [
-                                          Text(
-                                            "나의 행사 달성 상황",
-                                            style:
-                                                InjicareFont().body03.copyWith(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10),
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          "나의 행사 달성 상황",
+                                          style: InjicareFont().body03.copyWith(
+                                                color: InjicareColor(
+                                                        context: context)
+                                                    .gray80,
+                                              ),
+                                        ),
+                                        Gaps.v20,
+                                        // 달성 시
+                                        if (stateEventModel.userAchieveOrNot ??
+                                            false)
+                                          Column(
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.end,
+                                                children: [
+                                                  SizedBox(
+                                                    child: LottieBuilder.asset(
+                                                      "assets/anims/congratulation.json",
+                                                      width: 40,
+                                                    ),
+                                                  ),
+                                                  Gaps.h5,
+                                                  Text(
+                                                    "달성했습니다!",
+                                                    textAlign: TextAlign.center,
+                                                    style: InjicareFont()
+                                                        .body01
+                                                        .copyWith(
+                                                          color: InjicareColor(
+                                                                  context:
+                                                                      context)
+                                                              .secondary50,
+                                                        ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Gaps.v20,
+                                              Text(
+                                                "아래 [누르고 선물 받기]\n버튼을 눌러서\n선물을 받아가세요",
+                                                textAlign: TextAlign.center,
+                                                style: InjicareFont()
+                                                    .body07
+                                                    .copyWith(
                                                       color: InjicareColor(
                                                               context: context)
-                                                          .gray80,
+                                                          .secondary50,
                                                     ),
+                                              ),
+                                              Gaps.v32,
+                                            ],
                                           ),
-                                          Gaps.v20,
-                                          // 달성 시
-                                          if (stateEventModel
-                                                  .userAchieveOrNot ??
-                                              false)
-                                            Column(
-                                              children: [
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.end,
-                                                  children: [
-                                                    SizedBox(
-                                                      child:
-                                                          LottieBuilder.asset(
-                                                        "assets/anims/congratulation.json",
-                                                        width: 40,
-                                                      ),
-                                                    ),
-                                                    Gaps.h5,
-                                                    Text(
-                                                      "달성했습니다!",
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: TextStyle(
-                                                        fontSize: Sizes.size24,
-                                                        fontWeight:
-                                                            FontWeight.w800,
-                                                        color:
-                                                            isDarkMode(context)
-                                                                ? Palette()
-                                                                    .iconPurple
-                                                                : Palette()
-                                                                    .ocPurple,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                Gaps.v20,
-                                                Text(
-                                                  "아래 '누르고 선물 받기'\n버튼을 눌러서\n선물을 받아가세요~",
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    height: 1.2,
-                                                    color: isDarkMode(context)
-                                                        ? Palette().iconPurple
-                                                        : Palette().ocPurple,
-                                                  ),
-                                                ),
-                                                Gaps.v32,
-                                              ],
-                                            ),
-
-                                          if (widget.eventModel.diaryCount > 0)
-                                            EachCountProgressWidget(
-                                              eachText: "일기",
-                                              userCount: stateEventModel
-                                                      .userDiaryCount ??
-                                                  0,
-                                              eventCount:
-                                                  stateEventModel.diaryCount,
-                                            ),
-                                          if (widget.eventModel.quizCount > 0)
-                                            EachCountProgressWidget(
-                                              eachText: "문제 풀기",
-                                              userCount: stateEventModel
-                                                      .userQuizCount ??
-                                                  0,
-                                              eventCount:
-                                                  stateEventModel.quizCount,
-                                            ),
-                                          if (widget.eventModel.commentCount >
-                                              0)
-                                            EachCountProgressWidget(
-                                              eachText: "댓글",
-                                              userCount: stateEventModel
-                                                      .userCommentCount ??
-                                                  0,
-                                              eventCount:
-                                                  stateEventModel.commentCount,
-                                            ),
-                                          if (widget.eventModel.likeCount > 0)
-                                            EachCountProgressWidget(
-                                              eachText: "좋아요",
-                                              userCount: stateEventModel
-                                                      .userLikeCount ??
-                                                  0,
-                                              eventCount:
-                                                  stateEventModel.likeCount,
-                                            ),
-                                          if (widget
-                                                  .eventModel.invitationCount >
-                                              0)
-                                            EachCountProgressWidget(
-                                              eachText: "친구 초대",
-                                              userCount: stateEventModel
-                                                      .userInvitationCount ??
-                                                  0,
-                                              eventCount: stateEventModel
-                                                  .invitationCount,
-                                            ),
-                                        ],
-                                      ),
+                                        if (widget.eventModel.diaryCount > 0)
+                                          EachCountProgressWidget(
+                                            eachText: "일기",
+                                            userCount: stateEventModel
+                                                    .userDiaryCount ??
+                                                0,
+                                            eventCount:
+                                                stateEventModel.diaryCount,
+                                          ),
+                                        if (widget.eventModel.quizCount > 0)
+                                          EachCountProgressWidget(
+                                            eachText: "문제 풀기",
+                                            userCount:
+                                                stateEventModel.userQuizCount ??
+                                                    0,
+                                            eventCount:
+                                                stateEventModel.quizCount,
+                                          ),
+                                        if (widget.eventModel.commentCount > 0)
+                                          EachCountProgressWidget(
+                                            eachText: "댓글",
+                                            userCount: stateEventModel
+                                                    .userCommentCount ??
+                                                0,
+                                            eventCount:
+                                                stateEventModel.commentCount,
+                                          ),
+                                        if (widget.eventModel.likeCount > 0)
+                                          EachCountProgressWidget(
+                                            eachText: "좋아요",
+                                            userCount:
+                                                stateEventModel.userLikeCount ??
+                                                    0,
+                                            eventCount:
+                                                stateEventModel.likeCount,
+                                          ),
+                                        if (widget.eventModel.invitationCount >
+                                            0)
+                                          EachCountProgressWidget(
+                                            eachText: "친구 초대",
+                                            userCount: stateEventModel
+                                                    .userInvitationCount ??
+                                                0,
+                                            eventCount:
+                                                stateEventModel.invitationCount,
+                                          ),
+                                      ],
                                     ),
                                   ),
                                 ),
@@ -556,6 +540,14 @@ class _EventDetailCountScreenState
                       size: size,
                       eventModel: widget.eventModel,
                     ),
+          Gaps.v24,
+          Container(
+            decoration: const BoxDecoration(),
+            child: Image.network(
+              widget.eventModel.eventImage,
+              fit: BoxFit.cover,
+            ),
+          ),
           Gaps.v24,
           const EventHeader(headerText: "설명"),
           Row(
@@ -637,14 +629,6 @@ class _EventDetailCountScreenState
               ),
             ],
           ),
-          Gaps.v24,
-          Container(
-            decoration: const BoxDecoration(),
-            child: Image.network(
-              widget.eventModel.eventImage,
-              fit: BoxFit.cover,
-            ),
-          ),
         ],
       ),
     );
@@ -670,8 +654,7 @@ class EachCountProgressWidget extends StatelessWidget {
         Text(
           "▪︎  $eachText",
           style: InjicareFont().body01.copyWith(
-                fontWeight: FontWeight.w400,
-                color: InjicareColor().primary50,
+                color: InjicareColor(context: context).gray100,
               ),
         ),
         Gaps.v10,
@@ -984,8 +967,7 @@ class CountTile extends StatelessWidget {
           text: TextSpan(
             text: "▪︎ $header  →  ",
             style: InjicareFont().body01.copyWith(
-                  fontWeight: FontWeight.w400,
-                  color: isDarkMode(context) ? Colors.white : Colors.black,
+                  color: InjicareColor(context: context).gray100,
                 ),
             children: <TextSpan>[
               TextSpan(
