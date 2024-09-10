@@ -6,6 +6,7 @@ import 'package:injicare_event/view/default_screen.dart';
 import 'package:injicare_event/view/error_screen.dart';
 import 'package:injicare_event/view/event_detail_count_screen.dart';
 import 'package:injicare_event/view/event_detail_multiple_scores_screen.dart';
+import 'package:injicare_event/view/event_detail_photo_screen.dart';
 import 'package:injicare_event/view/event_detail_quiz_screen.dart';
 import 'package:injicare_event/view/event_detail_target_score_screen.dart';
 import 'package:injicare_event/view_models/event_view_model.dart';
@@ -75,6 +76,16 @@ class _NavigatorScreenState extends ConsumerState<NavigatorScreen> {
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => EventDetailQuizScreen(
+            eventModel: eventModel,
+            userProfile: userProfile,
+          ),
+        ),
+      );
+    } else if (eventModel.eventType == "photo") {
+      if (!mounted) return;
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => EventDetailPhotoScreen(
             eventModel: eventModel,
             userProfile: userProfile,
           ),
