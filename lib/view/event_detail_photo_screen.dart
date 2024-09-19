@@ -578,11 +578,10 @@ class _SelectPhotoWidgetState extends State<SelectPhotoWidget> {
                                               "사진을 선택해주세요",
                                               textAlign: TextAlign.center,
                                               style: InjicareFont()
-                                                  .label03
+                                                  .body06
                                                   .copyWith(
-                                                      color: InjicareColor(
-                                                              context: context)
-                                                          .gray100),
+                                                    color: Colors.red,
+                                                  ),
                                               overflow: TextOverflow.visible,
                                             ),
                                           );
