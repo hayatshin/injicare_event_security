@@ -465,12 +465,13 @@ class _SelectPhotoWidgetState extends State<SelectPhotoWidget> {
                   ),
                 ],
               ),
-              Gaps.v40,
+              Gaps.v20,
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      Gaps.v20,
                       const EventHeader(
                         headerText: "작품명",
                       ),
@@ -569,6 +570,7 @@ class _SelectPhotoWidgetState extends State<SelectPhotoWidget> {
                                     )
                                   : Image.network(
                                       _photo!.path,
+                                      fit: BoxFit.cover,
                                     ),
                             ),
                             Gaps.v10,
@@ -581,7 +583,8 @@ class _SelectPhotoWidgetState extends State<SelectPhotoWidget> {
                             )
                           ],
                         ),
-                      )
+                      ),
+                      Gaps.v60,
                     ],
                   ),
                 ),
@@ -607,7 +610,7 @@ class _SelectPhotoWidgetState extends State<SelectPhotoWidget> {
                   ),
                   child: Center(
                     child: Text(
-                      "사진 제출하기",
+                      "사진전에 제출하기",
                       style: InjicareFont().body01.copyWith(
                             color: Colors.white,
                           ),
