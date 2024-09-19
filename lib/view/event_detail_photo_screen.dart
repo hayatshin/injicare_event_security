@@ -607,11 +607,11 @@ class _SelectPhotoWidgetState extends State<SelectPhotoWidget> {
               ),
               GestureDetector(
                 onTap: () {
-                  if (_title.isEmpty || _photo == null) return;
                   if (_tapSubmitPhotoEvent) return;
                   setState(() {
                     _tapSubmitPhotoEvent = true;
                   });
+                  if (_title.isEmpty || _photo == null) return;
                   widget.submitPhotoEvent();
                 },
                 child: Container(
