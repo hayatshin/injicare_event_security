@@ -136,6 +136,7 @@ class _EventDetailPointScreenState
     });
 
     Future.delayed(const Duration(seconds: 1), () {
+      if (!mounted) return;
       Navigator.of(context).pop();
     });
   }
@@ -363,18 +364,7 @@ class _EventDetailPointScreenState
           ),
           Gaps.v40,
           !_myParticipationLoadingComplete
-              ? Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: Sizes.size20,
-                  ),
-                  child: CircularProgressIndicator.adaptive(
-                    valueColor: AlwaysStoppedAnimation(
-                      isDarkMode(context)
-                          ? Colors.grey.shade700
-                          : Colors.grey.shade400,
-                    ),
-                  ),
-                )
+              ? Container()
               : _myParticipation
                   ? !_completeScoreLoading
                       ? Column(

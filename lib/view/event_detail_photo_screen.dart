@@ -289,21 +289,7 @@ class _EventDetailPointScreenState
 
             // 참여
             !_myParticipationLoadingComplete
-                ? Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 100,
-                    ),
-                    child: Center(
-                      child: SizedBox(
-                        width: 15,
-                        height: 15,
-                        child: CircularProgressIndicator.adaptive(
-                          valueColor: AlwaysStoppedAnimation(
-                              InjicareColor(context: context).gray30),
-                        ),
-                      ),
-                    ),
-                  )
+                ? Container()
                 : !_myParticipation
                     ? Column(
                         children: [
@@ -428,7 +414,9 @@ class _SelectPhotoWidgetState extends State<SelectPhotoWidget> {
 
   void _selectPhoto() async {
     final ImagePicker picker = ImagePicker();
-    final XFile? photo = await picker.pickImage(source: ImageSource.gallery);
+    final XFile? photo = await picker.pickImage(
+      source: ImageSource.gallery,
+    );
 
     if (photo != null) {
       setState(() {
@@ -568,9 +556,33 @@ class _SelectPhotoWidgetState extends State<SelectPhotoWidget> {
                                         ),
                                       ),
                                     )
-                                  : Image.network(
-                                      _photo!.path,
-                                      fit: BoxFit.cover,
+                                  : Container(
+                                      width: 180,
+                                      height: 180,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                      clipBehavior: Clip.hardEdge,
+                                      child: Image.network(
+                                        _photo!.path,
+                                        fit: BoxFit.cover,
+                                        errorBuilder:
+                                            (context, error, stackTrace) {
+                                          return Center(
+                                            child: Text(
+                                              "사진을 선택해주세요",
+                                              textAlign: TextAlign.center,
+                                              style: InjicareFont()
+                                                  .label03
+                                                  .copyWith(
+                                                      color: InjicareColor(
+                                                              context: context)
+                                                          .gray100),
+                                              overflow: TextOverflow.visible,
+                                            ),
+                                          );
+                                        },
+                                      ),
                                     ),
                             ),
                             Gaps.v10,

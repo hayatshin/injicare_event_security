@@ -262,21 +262,7 @@ class _EventDetailPointScreenState
 
             // 참여
             !_myParticipationLoadingComplete
-                ? Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 100,
-                    ),
-                    child: Center(
-                      child: SizedBox(
-                        width: 15,
-                        height: 15,
-                        child: CircularProgressIndicator.adaptive(
-                          valueColor: AlwaysStoppedAnimation(
-                              InjicareColor(context: context).gray30),
-                        ),
-                      ),
-                    ),
-                  )
+                ? Container()
                 : !_myParticipation
                     ? Column(
                         children: [
