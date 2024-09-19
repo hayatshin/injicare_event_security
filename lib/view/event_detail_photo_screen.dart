@@ -104,7 +104,7 @@ class _EventDetailPointScreenState
   }
 
   void _submitPhotoEvent() async {
-    if (_title.isEmpty || _photo == null) return;
+    // if (_title.isEmpty || _photo == null) return;
 
     // participate_event를 해야할까?
     final participantUpdateEventModel = stateEventModel.copyWith(
@@ -607,10 +607,11 @@ class _SelectPhotoWidgetState extends State<SelectPhotoWidget> {
               ),
               GestureDetector(
                 onTap: () {
+                  if (_title.isEmpty || _photo == null) return;
+                  if (_tapSubmitPhotoEvent) return;
                   setState(() {
                     _tapSubmitPhotoEvent = true;
                   });
-                  if (_tapSubmitPhotoEvent) return;
                   widget.submitPhotoEvent();
                 },
                 child: Container(
@@ -626,12 +627,22 @@ class _SelectPhotoWidgetState extends State<SelectPhotoWidget> {
                     ),
                   ),
                   child: Center(
-                    child: Text(
-                      "사진전에 제출하기",
-                      style: InjicareFont().body01.copyWith(
-                            color: Colors.white,
+                    child: _tapSubmitPhotoEvent
+                        ? const SizedBox(
+                            width: 15,
+                            height: 15,
+                            child: CircularProgressIndicator.adaptive(
+                              valueColor: AlwaysStoppedAnimation(
+                                Colors.white,
+                              ),
+                            ),
+                          )
+                        : Text(
+                            "사진전에 제출하기",
+                            style: InjicareFont().body01.copyWith(
+                                  color: Colors.white,
+                                ),
                           ),
-                    ),
                   ),
                 ),
               )
