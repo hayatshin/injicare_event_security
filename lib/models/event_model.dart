@@ -156,7 +156,7 @@ class EventModel {
         quizPoint = json["quizPoint"] ?? 0,
         adminSecret = json["adminSecret"] ?? true,
         bannerImage = json["bannerImage"] ?? "",
-        eventType = json["eventType"],
+        eventType = json["eventType"] ?? "",
         diaryCount = json["diaryCount"] ?? 0,
         commentCount = json["commentCount"] ?? 0,
         likeCount = json["likeCount"] ?? 0,
