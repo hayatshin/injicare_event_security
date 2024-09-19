@@ -420,6 +420,7 @@ class _SelectPhotoWidgetState extends State<SelectPhotoWidget> {
 
     if (photo != null) {
       setState(() {
+        _tapSubmitPhotoEvent = false;
         _photo = photo;
       });
       widget.selectPhoto(photo);
@@ -487,8 +488,12 @@ class _SelectPhotoWidgetState extends State<SelectPhotoWidget> {
                                       clipBehavior: Clip.hardEdge,
                                       child: TextFormField(
                                         // controller: _shortAnswerControllder,
-                                        onChanged: (value) =>
-                                            _writeTitle(value),
+                                        onChanged: (value) {
+                                          setState(() {
+                                            _tapSubmitPhotoEvent = false;
+                                          });
+                                          _writeTitle(value);
+                                        },
                                         maxLines: 1,
                                         textAlignVertical:
                                             TextAlignVertical.center,
@@ -606,6 +611,7 @@ class _SelectPhotoWidgetState extends State<SelectPhotoWidget> {
                   setState(() {
                     _tapSubmitPhotoEvent = true;
                   });
+                  if (_tapSubmitPhotoEvent) return;
                   widget.submitPhotoEvent();
                 },
                 child: Container(

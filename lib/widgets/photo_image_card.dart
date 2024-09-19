@@ -32,12 +32,16 @@ class PhotoImageCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text(
-                    "$index",
-                    style: InjicareFont().body01,
+                  Expanded(
+                    flex: 1,
+                    child: Text(
+                      "$index",
+                      style: InjicareFont().body01,
+                    ),
                   ),
                   Gaps.h10,
                   Expanded(
+                    flex: 5,
                     child: SizedBox(
                       width: 56,
                       child: Text(
@@ -48,7 +52,8 @@ class PhotoImageCard extends StatelessWidget {
                     ),
                   ),
                   Gaps.h10,
-                  Flexible(
+                  Expanded(
+                    flex: 4,
                     child: Text(
                       secondsToStringDateComment(photoImageModel.createdAt),
                       style: InjicareFont().body06.copyWith(
@@ -67,8 +72,12 @@ class PhotoImageCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Expanded(
+                    flex: 1,
+                    child: Container(),
+                  ),
+                  Expanded(
+                    flex: 5,
                     child: Container(
-                      width: 80,
                       height: 80,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
@@ -84,11 +93,13 @@ class PhotoImageCard extends StatelessWidget {
                             ),
                           );
                         },
+                        fit: BoxFit.fill,
                       ),
                     ),
                   ),
                   Gaps.h10,
-                  Flexible(
+                  Expanded(
+                    flex: 4,
                     child: Text(
                       photoImageModel.title,
                       style: InjicareFont().body01,
