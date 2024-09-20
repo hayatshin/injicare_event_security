@@ -8,6 +8,7 @@ import 'package:injicare_event/models/photo_image_model.dart';
 import 'package:injicare_event/models/quiz_answer_model.dart';
 import 'package:injicare_event/utils.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:uuid/uuid.dart';
 
 class EventRepository {
   final _supabase = Supabase.instance.client;
@@ -469,8 +470,9 @@ class EventRepository {
   Future<String> uploadPhotoImageToStorage(
       XFile photoImage, String eventId, String userId) async {
     try {
+      final uuid = const Uuid().v4();
       final avatarBytes = await photoImage.readAsBytes();
-      final fileStoragePath = '$eventId/$userId';
+      final fileStoragePath = '$eventId/$userId/$uuid';
       await _supabase.storage
           .from("photo_events")
           .uploadBinary(fileStoragePath, avatarBytes,

@@ -17,6 +17,9 @@ import 'package:injicare_event/view_models/event_view_model.dart';
 import 'package:injicare_event/widgets/event_detail_template.dart';
 import 'package:injicare_event/widgets/photo_image_card.dart';
 
+final isImageAccessible = ValueNotifier<bool>(true);
+final submitPhotoEvent = ValueNotifier<bool>(false);
+
 class EventDetailPhotoScreen extends ConsumerStatefulWidget {
   final EventModel eventModel;
   final UserProfile userProfile;
@@ -104,39 +107,47 @@ class _EventDetailPointScreenState
   }
 
   void _submitPhotoEvent() async {
-    // if (_title.isEmpty || _photo == null) return;
+    try {
+      if (_title.isEmpty || _photo == null || !isImageAccessible.value) return;
 
-    // participate_event를 해야할까?
-    final participantUpdateEventModel = stateEventModel.copyWith(
-        participantsNumber: stateEventModel.participantsNumber != null
-            ? stateEventModel.participantsNumber! + 1
-            : 1);
+      submitPhotoEvent.value = true;
 
-    // 사진 추가
-    final photoUrl = await ref.read(eventRepo).uploadPhotoImageToStorage(
-          _photo!,
-          stateEventModel.eventId,
-          widget.userProfile.userId,
-        );
+      // participate_event를 해야할까?
+      final participantUpdateEventModel = stateEventModel.copyWith(
+          participantsNumber: stateEventModel.participantsNumber != null
+              ? stateEventModel.participantsNumber! + 1
+              : 1);
 
-    final photoImageModel = PhotoImageModel(
-      eventId: stateEventModel.eventId,
-      userId: widget.userProfile.userId,
-      createdAt: getCurrentSeconds(),
-      photo: photoUrl,
-      title: _title,
-    );
+      // 사진 추가
+      final photoUrl = await ref.read(eventRepo).uploadPhotoImageToStorage(
+            _photo!,
+            stateEventModel.eventId,
+            widget.userProfile.userId,
+          );
 
-    await ref.read(eventRepo).savePhotoEventAnswer(photoImageModel);
+      final photoImageModel = PhotoImageModel(
+        eventId: stateEventModel.eventId,
+        userId: widget.userProfile.userId,
+        createdAt: getCurrentSeconds(),
+        photo: photoUrl,
+        title: _title,
+      );
 
-    setState(() {
-      _imagesList.insert(0, photoImageModel);
-      stateEventModel = participantUpdateEventModel;
-      _myParticipation = true;
-    });
+      await ref.read(eventRepo).savePhotoEventAnswer(photoImageModel);
 
-    if (!mounted) return;
-    Navigator.of(context).pop();
+      setState(() {
+        _imagesList.insert(0, photoImageModel);
+        stateEventModel = participantUpdateEventModel;
+        _myParticipation = true;
+      });
+
+      if (!mounted) return;
+      Navigator.of(context).pop();
+    } catch (e) {
+      submitPhotoEvent.value = false;
+      // ignore: avoid_print
+      print("_submitPhotoEvent -> $e");
+    }
   }
 
   Future<void> _participateEvent() async {
@@ -571,8 +582,14 @@ class _SelectPhotoWidgetState extends State<SelectPhotoWidget> {
                                       child: Image.network(
                                         _photo!.path,
                                         fit: BoxFit.cover,
+                                        frameBuilder: (context, child, frame,
+                                            wasSynchronouslyLoaded) {
+                                          isImageAccessible.value = true;
+                                          return child;
+                                        },
                                         errorBuilder:
                                             (context, error, stackTrace) {
+                                          isImageAccessible.value = false;
                                           return Center(
                                             child: Text(
                                               "사진을 선택해주세요",
@@ -605,46 +622,50 @@ class _SelectPhotoWidgetState extends State<SelectPhotoWidget> {
                   ),
                 ),
               ),
-              GestureDetector(
-                onTap: () {
-                  if (_tapSubmitPhotoEvent) return;
-                  setState(() {
-                    _tapSubmitPhotoEvent = true;
-                  });
-                  if (_title.isEmpty || _photo == null) return;
-                  widget.submitPhotoEvent();
-                },
-                child: Container(
-                  height: 55,
-                  decoration: BoxDecoration(
-                    color: InjicareColor(context: context).primary50,
-                    borderRadius: BorderRadius.circular(
-                      Sizes.size5,
-                    ),
-                    border: Border.all(
-                      color: Colors.black,
-                      width: 2,
-                    ),
-                  ),
-                  child: Center(
-                    child: _tapSubmitPhotoEvent
-                        ? const SizedBox(
-                            width: 15,
-                            height: 15,
-                            child: CircularProgressIndicator.adaptive(
-                              valueColor: AlwaysStoppedAnimation(
-                                Colors.white,
-                              ),
-                            ),
-                          )
-                        : Text(
-                            "사진전에 제출하기",
-                            style: InjicareFont().body01.copyWith(
-                                  color: Colors.white,
+              ValueListenableBuilder(
+                valueListenable: submitPhotoEvent,
+                builder: (context, submitPhotoEventValue, child) {
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _tapSubmitPhotoEvent = true;
+                      });
+                      if (submitPhotoEventValue) return;
+                      widget.submitPhotoEvent();
+                    },
+                    child: Container(
+                      height: 55,
+                      decoration: BoxDecoration(
+                        color: InjicareColor(context: context).primary50,
+                        borderRadius: BorderRadius.circular(
+                          Sizes.size5,
+                        ),
+                        border: Border.all(
+                          color: Colors.black,
+                          width: 2,
+                        ),
+                      ),
+                      child: Center(
+                        child: submitPhotoEventValue
+                            ? const SizedBox(
+                                width: 15,
+                                height: 15,
+                                child: CircularProgressIndicator.adaptive(
+                                  valueColor: AlwaysStoppedAnimation(
+                                    Colors.white,
+                                  ),
                                 ),
-                          ),
-                  ),
-                ),
+                              )
+                            : Text(
+                                "사진전에 제출하기",
+                                style: InjicareFont().body01.copyWith(
+                                      color: Colors.white,
+                                    ),
+                              ),
+                      ),
+                    ),
+                  );
+                },
               )
             ],
           ),
