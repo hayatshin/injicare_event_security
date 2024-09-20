@@ -41,6 +41,7 @@ class _EventDetailPointScreenState
   List<QuizAnswerModel> _answerList = [];
   bool _completeScoreLoading = false;
   int _selectedMultipleChoice = 0;
+  bool _submitQuizEvent = false;
 
   @override
   void initState() {
@@ -114,6 +115,10 @@ class _EventDetailPointScreenState
       return;
     }
 
+    setState(() {
+      _submitQuizEvent = true;
+    });
+
     final participantUpdateEventModel = stateEventModel.copyWith(
         participantsNumber: stateEventModel.participantsNumber != null
             ? stateEventModel.participantsNumber! + 1
@@ -135,7 +140,7 @@ class _EventDetailPointScreenState
     await ref.read(eventRepo).saveQuizEventAnswer(answerModel);
 
     setState(() {
-      _answerList.insert(0, answerModel);
+      _answerList.add(answerModel);
       stateEventModel = participantUpdateEventModel;
       _myParticipation = true;
     });
@@ -153,7 +158,6 @@ class _EventDetailPointScreenState
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
         closeKeyboard(context);
@@ -200,7 +204,7 @@ class _EventDetailPointScreenState
                   )
                 : !_myParticipation
                     ? GestureDetector(
-                        onTap: _participateEvent,
+                        onTap: _submitQuizEvent ? null : _participateEvent,
                         child: Container(
                           height: 55,
                           decoration: BoxDecoration(
