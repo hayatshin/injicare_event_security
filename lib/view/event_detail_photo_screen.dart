@@ -50,6 +50,8 @@ class _EventDetailPointScreenState
   String _title = "";
   XFile? _photo;
 
+  final lastParticipantKey = ValueNotifier<GlobalKey?>(null);
+
   @override
   void initState() {
     super.initState();
@@ -61,6 +63,7 @@ class _EventDetailPointScreenState
   @override
   void dispose() {
     // _answerController.dispose();
+    lastParticipantKey.dispose();
     super.dispose();
   }
 
@@ -106,6 +109,17 @@ class _EventDetailPointScreenState
     });
   }
 
+  void _scrollToLastParticipantBottom() {
+    if (lastParticipantKey.value != null &&
+        lastParticipantKey.value!.currentContext != null) {
+      Scrollable.ensureVisible(
+        lastParticipantKey.value!.currentContext!,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.linear,
+      );
+    }
+  }
+
   void _submitPhotoEvent() async {
     try {
       if (_title.isEmpty || _photo == null || !isImageAccessible.value) return;
@@ -143,6 +157,8 @@ class _EventDetailPointScreenState
 
       if (!mounted) return;
       Navigator.of(context).pop();
+
+      _scrollToLastParticipantBottom();
     } catch (e) {
       submitPhotoEvent.value = false;
       // ignore: avoid_print
@@ -379,11 +395,27 @@ class _EventDetailPointScreenState
                           const EventHeader(
                             headerText: "출품작들",
                           ),
-                          for (int i = 0; i < _imagesList.length; i++)
-                            PhotoImageCard(
-                              index: i + 1,
-                              photoImageModel: _imagesList[i],
-                            ),
+                          CustomScrollView(
+                            shrinkWrap: true,
+                            slivers: [
+                              SliverList(
+                                delegate: SliverChildBuilderDelegate(
+                                  (context, index) {
+                                    final dataKey = GlobalKey();
+                                    if (index == _imagesList.length - 1) {
+                                      lastParticipantKey.value = dataKey;
+                                    }
+                                    return PhotoImageCard(
+                                      key: dataKey,
+                                      index: index + 1,
+                                      photoImageModel: _imagesList[index],
+                                    );
+                                  },
+                                  childCount: _imagesList.length,
+                                ),
+                              )
+                            ],
+                          )
                         ],
                       ),
           ],

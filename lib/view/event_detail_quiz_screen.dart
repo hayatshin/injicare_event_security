@@ -42,6 +42,7 @@ class _EventDetailPointScreenState
   bool _completeScoreLoading = false;
   int _selectedMultipleChoice = 0;
   bool _submitQuizEvent = false;
+  final lastParticipantKey = ValueNotifier<GlobalKey?>(null);
 
   @override
   void initState() {
@@ -54,6 +55,7 @@ class _EventDetailPointScreenState
   @override
   void dispose() {
     // _answerController.dispose();
+    lastParticipantKey.dispose();
     super.dispose();
   }
 
@@ -87,6 +89,17 @@ class _EventDetailPointScreenState
         _myParticipation = dbMyParticipation.isNotEmpty;
         _answerList = correctAnswerList;
       });
+    }
+  }
+
+  void _scrollToLastParticipantBottom() {
+    if (lastParticipantKey.value != null &&
+        lastParticipantKey.value!.currentContext != null) {
+      Scrollable.ensureVisible(
+        lastParticipantKey.value!.currentContext!,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.linear,
+      );
     }
   }
 
@@ -144,7 +157,7 @@ class _EventDetailPointScreenState
       stateEventModel = participantUpdateEventModel;
       _myParticipation = true;
     });
-
+    _scrollToLastParticipantBottom();
     // Future.delayed(const Duration(seconds: 1), () {
     //   Navigator.of(context).pop();
     // });
@@ -403,11 +416,27 @@ class _EventDetailPointScreenState
                           const EventHeader(
                             headerText: "정답자 목록",
                           ),
-                          for (int i = 0; i < _answerList.length; i++)
-                            AnswerCard(
-                              index: i + 1,
-                              quizAnswerModel: _answerList[i],
-                            ),
+                          CustomScrollView(
+                            shrinkWrap: true,
+                            slivers: [
+                              SliverList(
+                                delegate: SliverChildBuilderDelegate(
+                                  (context, index) {
+                                    final dataKey = GlobalKey();
+                                    if (index == _answerList.length - 1) {
+                                      lastParticipantKey.value = dataKey;
+                                    }
+                                    return AnswerCard(
+                                      key: dataKey,
+                                      index: index + 1,
+                                      quizAnswerModel: _answerList[index],
+                                    );
+                                  },
+                                  childCount: _answerList.length,
+                                ),
+                              )
+                            ],
+                          ),
                         ],
                       ),
           ],
