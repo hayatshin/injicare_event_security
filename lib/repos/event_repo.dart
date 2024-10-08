@@ -12,8 +12,6 @@ import 'package:uuid/uuid.dart';
 
 class EventRepository {
   final _supabase = Supabase.instance.client;
-  static final pointUpFunctions = Uri.parse(
-      "https://diejlcrtffmlsdyvcagq.supabase.co/functions/v1/point-up-functions");
   static final pointEventFunctions = Uri.parse(
       "https://diejlcrtffmlsdyvcagq.supabase.co/functions/v1/point-event-functions");
 
