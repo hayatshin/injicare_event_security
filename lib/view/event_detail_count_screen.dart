@@ -655,10 +655,21 @@ class EachCountProgressWidget extends StatelessWidget {
               userScore: userCount,
             ),
             Flexible(
-              child: Text(
-                "$userCount회 / $eventCount회",
-                style: const TextStyle(
-                  fontWeight: FontWeight.w600,
+              child: RichText(
+                text: TextSpan(
+                  text: "$userCount회",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: Sizes.size36,
+                    color: InjicareColor(context: context).primary50,
+                  ),
+                  children: <TextSpan>[
+                    TextSpan(
+                        text: " / $eventCount회",
+                        style: TextStyle(
+                          color: InjicareColor(context: context).gray100,
+                        )),
+                  ],
                 ),
               ),
             )
@@ -816,7 +827,7 @@ class _MyProgressScreenState extends ConsumerState<MyProgressScreen>
             return CustomPaint(
               painter: MyProgressPainter(
                   progress: _progress.value, context: context),
-              size: Size(size.width * 0.4, 20),
+              size: Size(size.width * 0.3, 20),
             );
           },
         ),
