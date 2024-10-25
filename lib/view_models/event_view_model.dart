@@ -55,8 +55,12 @@ class EventViewModel extends AsyncNotifier<void> {
           eventModel.likePoint,
           eventModel.quizPoint,
           eventModel.targetScore,
-          eventModel.maxStepCount ?? 10000,
+          eventModel.maxStepCount,
+          eventModel.maxCommentCount,
+          eventModel.maxLikeCount,
+          eventModel.maxInvitationCount,
           userId,
+          eventModel.invitationType,
         );
 
         final scorePointModel = eventModel.copyWith(
@@ -82,11 +86,12 @@ class EventViewModel extends AsyncNotifier<void> {
           eventModel.likePoint,
           eventModel.quizPoint,
           eventModel.targetScore,
-          eventModel.maxStepCount ?? 10000,
-          eventModel.maxCommentCount ?? 0,
-          eventModel.maxLikeCount ?? 0,
-          eventModel.maxInvitationCount ?? 0,
+          eventModel.maxStepCount,
+          eventModel.maxCommentCount,
+          eventModel.maxLikeCount,
+          eventModel.maxInvitationCount,
           userId,
+          eventModel.invitationType,
         );
 
         final scorePointModel = eventModel.copyWith(
@@ -110,7 +115,11 @@ class EventViewModel extends AsyncNotifier<void> {
           eventModel.commentCount,
           eventModel.likeCount,
           eventModel.quizCount,
+          eventModel.maxCommentCount,
+          eventModel.maxLikeCount,
+          eventModel.maxInvitationCount,
           userId,
+          eventModel.invitationType,
         );
 
         final scorePointModel = eventModel.copyWith(
