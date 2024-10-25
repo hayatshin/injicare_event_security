@@ -586,15 +586,45 @@ class _EventDetailPointScreenState
                       ],
                     ),
                   if (widget.eventModel.commentPoint > 0)
-                    PointTile(
-                        header: "댓글 1회", point: widget.eventModel.commentPoint),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        PointTile(
+                            header: "댓글 1회",
+                            point: widget.eventModel.commentPoint),
+                        if ((widget.eventModel.maxCommentCount) > 0)
+                          DailyMaxTile(
+                              maxText: "${widget.eventModel.maxCommentCount}회"),
+                        Gaps.v4,
+                      ],
+                    ),
                   if (widget.eventModel.likePoint > 0)
-                    PointTile(
-                        header: "좋아요 1회", point: widget.eventModel.likePoint),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        PointTile(
+                            header: "좋아요 1회",
+                            point: widget.eventModel.likePoint),
+                        if ((widget.eventModel.maxLikeCount) > 0)
+                          DailyMaxTile(
+                              maxText: "${widget.eventModel.maxLikeCount}회"),
+                        Gaps.v4,
+                      ],
+                    ),
                   if (widget.eventModel.invitationPoint > 0)
-                    PointTile(
-                        header: "친구초대 1회",
-                        point: widget.eventModel.invitationPoint),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        PointTile(
+                            header: "친구초대 1회",
+                            point: widget.eventModel.invitationPoint),
+                        if ((widget.eventModel.maxInvitationCount) > 0)
+                          DailyMaxTile(
+                              maxText:
+                                  "${widget.eventModel.maxInvitationCount}회"),
+                        Gaps.v4,
+                      ],
+                    ),
                 ],
               ),
             ],

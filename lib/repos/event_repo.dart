@@ -12,17 +12,17 @@ import 'package:uuid/uuid.dart';
 
 class EventRepository {
   final _supabase = Supabase.instance.client;
-  static final pointEventFunctions = Uri.parse(
-      "https://diejlcrtffmlsdyvcagq.supabase.co/functions/v1/point-event-functions");
+  // static final pointEventFunctions = Uri.parse(
+  //     "https://diejlcrtffmlsdyvcagq.supabase.co/functions/v1/point-event-functions");
+  // static final eventUserPointFunctions = Uri.parse(
+  //     "https://diejlcrtffmlsdyvcagq.supabase.co/functions/v1/event-user-point-functions-2");
 
-  static final eventUserPointFunctions = Uri.parse(
-      "https://diejlcrtffmlsdyvcagq.supabase.co/functions/v1/event-user-point-functions-2");
   static final eventUserTargetScoreFunctions = Uri.parse(
-      "https://diejlcrtffmlsdyvcagq.supabase.co/functions/v1/event-user-targetscore-functions-3");
+      "https://diejlcrtffmlsdyvcagq.supabase.co/functions/v1/event-user-targetscore-functions-4");
   static final eventUserMultipleScoresFunctions = Uri.parse(
-      "https://diejlcrtffmlsdyvcagq.supabase.co/functions/v1/event-user-multiplescores-functions-3");
+      "https://diejlcrtffmlsdyvcagq.supabase.co/functions/v1/event-user-multiplescores-functions-4");
   static final eventUserCountFunctions = Uri.parse(
-      "https://diejlcrtffmlsdyvcagq.supabase.co/functions/v1/event-user-count-functions-3");
+      "https://diejlcrtffmlsdyvcagq.supabase.co/functions/v1/event-user-count-functions-4");
 
   Future<Map<String, dynamic>> getEventUserTargetScore(
     int startSeconds,
@@ -35,7 +35,11 @@ class EventRepository {
     int quizPoint,
     int targetScore,
     int maxStepCount,
+    int maxCommentCount,
+    int maxLikeCount,
+    int maxInvitationCount,
     String userId,
+    String invitationType,
   ) async {
     Map<String, dynamic> requestBody = {
       'userId': userId,
@@ -49,6 +53,10 @@ class EventRepository {
       "quizPoint": quizPoint,
       'targetScore': targetScore,
       'maxStepCount': maxStepCount,
+      'maxCommentCount': maxCommentCount,
+      'maxLikeCount': maxLikeCount,
+      'maxInvitationCount': maxInvitationCount,
+      'invitationType': invitationType,
     };
     String requestBodyJson = jsonEncode(requestBody);
 
@@ -81,6 +89,7 @@ class EventRepository {
     int maxLikeCount,
     int maxInvitationCount,
     String userId,
+    String invitationType,
   ) async {
     Map<String, dynamic> requestBody = {
       'userId': userId,
@@ -97,6 +106,7 @@ class EventRepository {
       'maxCommentCount': maxCommentCount,
       'maxLikeCount': maxLikeCount,
       'maxInvitationCount': maxInvitationCount,
+      'invitationType': invitationType,
     };
     String requestBodyJson = jsonEncode(requestBody);
 
@@ -122,8 +132,13 @@ class EventRepository {
     int commentCount,
     int likeCount,
     int quizCount,
+    int maxCommentCount,
+    int maxLikeCount,
+    int maxInvitationCount,
     String userId,
+    String invitationType,
   ) async {
+    print("invitationType: $invitationType");
     Map<String, dynamic> requestBody = {
       'userId': userId,
       'startSeconds': startSeconds,
@@ -133,6 +148,10 @@ class EventRepository {
       'commentCount': commentCount,
       'likeCount': likeCount,
       'quizCount': quizCount,
+      'maxCommentCount': maxCommentCount,
+      'maxLikeCount': maxLikeCount,
+      'maxInvitationCount': maxInvitationCount,
+      'invitationType': invitationType,
     };
     String requestBodyJson = jsonEncode(requestBody);
 
@@ -144,6 +163,8 @@ class EventRepository {
 
     if (response.statusCode == 200) {
       final data = jsonDecode(utf8.decode(response.bodyBytes));
+      print("data: ${data["data"]}");
+
       return data["data"];
     }
 
@@ -273,39 +294,39 @@ class EventRepository {
     await _supabase.from("event_participants").insert(participation);
   }
 
-  Future<List<dynamic>> getEventUserScore(
-    int startSeconds,
-    int endSeconds,
-    int stepPoint,
-    int diaryPoint,
-    int commentPoint,
-    int likePoint,
-    String userId,
-  ) async {
-    Map<String, dynamic> requestBody = {
-      'userId': userId,
-      'startSeconds': startSeconds,
-      'endSeconds': endSeconds,
-      'stepPoint': stepPoint,
-      'diaryPoint': diaryPoint,
-      'commentPoint': commentPoint,
-      'likePoint': likePoint,
-    };
-    String requestBodyJson = jsonEncode(requestBody);
+  // Future<List<dynamic>> getEventUserScore(
+  //   int startSeconds,
+  //   int endSeconds,
+  //   int stepPoint,
+  //   int diaryPoint,
+  //   int commentPoint,
+  //   int likePoint,
+  //   String userId,
+  // ) async {
+  //   Map<String, dynamic> requestBody = {
+  //     'userId': userId,
+  //     'startSeconds': startSeconds,
+  //     'endSeconds': endSeconds,
+  //     'stepPoint': stepPoint,
+  //     'diaryPoint': diaryPoint,
+  //     'commentPoint': commentPoint,
+  //     'likePoint': likePoint,
+  //   };
+  //   String requestBodyJson = jsonEncode(requestBody);
 
-    final response = await http.post(
-      pointEventFunctions,
-      body: requestBodyJson,
-      headers: headers,
-    );
+  //   final response = await http.post(
+  //     pointEventFunctions,
+  //     body: requestBodyJson,
+  //     headers: headers,
+  //   );
 
-    if (response.statusCode == 200) {
-      Map<String, dynamic> data = jsonDecode(utf8.decode(response.bodyBytes));
-      return data["data"];
-    }
+  //   if (response.statusCode == 200) {
+  //     Map<String, dynamic> data = jsonDecode(utf8.decode(response.bodyBytes));
+  //     return data["data"];
+  //   }
 
-    return [];
-  }
+  //   return [];
+  // }
 
   Future<String> convertContractRegionIdToName(String contractRegionId) async {
     if (contractRegionId != "") {

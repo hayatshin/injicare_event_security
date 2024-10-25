@@ -49,10 +49,10 @@ class EventModel {
   final int? participantsNumber;
   final int? ageLimit;
 
-  final int? maxStepCount;
-  final int? maxCommentCount;
-  final int? maxLikeCount;
-  final int? maxInvitationCount;
+  final int maxStepCount;
+  final int maxCommentCount;
+  final int maxLikeCount;
+  final int maxInvitationCount;
 
   final String? quizEventId;
   final String? quiz;
@@ -61,6 +61,8 @@ class EventModel {
   final String? thirdChoice;
   final String? fourthChoice;
   final int? quizAnswer;
+
+  final String invitationType;
 
   EventModel({
     required this.allUsers,
@@ -106,10 +108,10 @@ class EventModel {
     this.leftDays,
     this.participantsNumber,
     this.ageLimit,
-    this.maxStepCount,
-    this.maxCommentCount,
-    this.maxLikeCount,
-    this.maxInvitationCount,
+    required this.maxStepCount,
+    required this.maxCommentCount,
+    required this.maxLikeCount,
+    required this.maxInvitationCount,
     this.quizEventId,
     this.quiz,
     this.firstChoice,
@@ -117,6 +119,7 @@ class EventModel {
     this.thirdChoice,
     this.fourthChoice,
     this.quizAnswer,
+    required this.invitationType,
   });
 
   EventModel.fromJson(Map<String, dynamic> json)
@@ -202,7 +205,8 @@ class EventModel {
             : "",
         quizAnswer = json["quiz_event_db"].isNotEmpty
             ? json["quiz_event_db"][0]["quizAnswer"]
-            : 0;
+            : 0,
+        invitationType = json["invitationType"] ?? "send";
 
   Map<String, dynamic> toJson() {
     return {
@@ -237,6 +241,7 @@ class EventModel {
       "maxCommentCount": maxCommentCount,
       "maxLikeCount": maxLikeCount,
       "maxInvitationCount": maxInvitationCount,
+      "invitationType": invitationType,
     };
   }
 
@@ -287,6 +292,7 @@ class EventModel {
     int? maxCommentCount,
     int? maxLikeCount,
     int? maxInvitationCount,
+    String? invitationType,
   }) {
     return EventModel(
       allUsers: allUsers ?? this.allUsers,
@@ -343,6 +349,7 @@ class EventModel {
       thirdChoice: thirdChoice,
       fourthChoice: fourthChoice,
       quizAnswer: quizAnswer,
+      invitationType: invitationType ?? this.invitationType,
     );
   }
 
@@ -400,5 +407,6 @@ class EventModel {
         secondChoice = "",
         thirdChoice = "",
         fourthChoice = "",
-        quizAnswer = 0;
+        quizAnswer = 0,
+        invitationType = "send";
 }

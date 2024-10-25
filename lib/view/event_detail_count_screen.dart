@@ -592,13 +592,15 @@ class _EventDetailCountScreenState
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const EventHeader(headerText: "계산 방법"),
-                  if (widget.eventModel.invitationCount > 0)
-                    CountTile(
-                        header: "친구초대",
-                        point: widget.eventModel.invitationCount),
                   if (widget.eventModel.diaryCount > 0)
-                    CountTile(
-                        header: "일기", point: widget.eventModel.diaryCount),
+                    Column(
+                      children: [
+                        CountTile(
+                            header: "일기", point: widget.eventModel.diaryCount),
+                        const DailyMaxTile(maxText: "1회"),
+                        Gaps.v4,
+                      ],
+                    ),
                   if (widget.eventModel.quizCount > 0)
                     Column(
                       children: [
@@ -610,10 +612,41 @@ class _EventDetailCountScreenState
                       ],
                     ),
                   if (widget.eventModel.commentCount > 0)
-                    CountTile(
-                        header: "댓글", point: widget.eventModel.commentCount),
+                    Column(
+                      children: [
+                        CountTile(
+                            header: "댓글",
+                            point: widget.eventModel.commentCount),
+                        if ((widget.eventModel.maxCommentCount) > 0)
+                          DailyMaxTile(
+                              maxText: "${widget.eventModel.maxCommentCount}회"),
+                        Gaps.v4,
+                      ],
+                    ),
                   if (widget.eventModel.likeCount > 0)
-                    CountTile(header: "좋아요", point: widget.eventModel.likeCount)
+                    Column(
+                      children: [
+                        CountTile(
+                            header: "좋아요", point: widget.eventModel.likeCount),
+                        if ((widget.eventModel.maxLikeCount) > 0)
+                          DailyMaxTile(
+                              maxText: "${widget.eventModel.maxLikeCount}회"),
+                        Gaps.v4,
+                      ],
+                    ),
+                  if (widget.eventModel.invitationCount > 0)
+                    Column(
+                      children: [
+                        CountTile(
+                            header: "친구초대",
+                            point: widget.eventModel.invitationCount),
+                        if ((widget.eventModel.maxInvitationCount) > 0)
+                          DailyMaxTile(
+                              maxText:
+                                  "${widget.eventModel.maxInvitationCount}회"),
+                        Gaps.v4,
+                      ],
+                    ),
                 ],
               ),
             ],
