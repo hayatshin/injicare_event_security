@@ -138,7 +138,7 @@ class _EventDetailCountScreenState
         .read(eventRepo)
         .getEventUserNumbers(widget.eventModel.eventId);
     final achieverNumbers = stateEventModel.achieversNumber;
-    bool canGetGift = userGifts < achieverNumbers;
+    bool canGetGift = achieverNumbers == 0 ? true : userGifts < achieverNumbers;
 
     if (!mounted) return;
     showModalBottomSheet(
