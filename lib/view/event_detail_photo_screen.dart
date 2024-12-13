@@ -167,6 +167,8 @@ class _EventDetailPointScreenState
   }
 
   Future<void> _participateEvent() async {
+    if (_myParticipation) return;
+
     int startSeconds =
         convertStartDateStringToSeconds(widget.eventModel.startDate);
     int currentSeconds = getCurrentSeconds();

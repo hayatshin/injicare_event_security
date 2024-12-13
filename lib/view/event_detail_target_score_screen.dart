@@ -110,12 +110,15 @@ class _EventDetailPointScreenState
   // }
 
   Future<void> _participateEvent() async {
+    if (_myParticipation) return;
+
     int userAge = widget.userProfile.userAge != null
         ? int.parse(widget.userProfile.userAge!)
         : 0;
     bool userAgeCheck = stateEventModel.ageLimit != null
         ? userAge >= stateEventModel.ageLimit!
         : true;
+
     if (!userAgeCheck) {
       if (!mounted) return;
       showWarningSnackBar(context, "참여하실 수 없는 연령입니다");
@@ -135,10 +138,12 @@ class _EventDetailPointScreenState
       _myParticipation = true;
     });
 
-    Future.delayed(const Duration(seconds: 1), () {
-      if (!mounted) return;
-      Navigator.of(context).pop();
-    });
+    // Future.delayed(const Duration(seconds: 1), () {
+    //   if (!mounted) return;
+    //   if (Navigator.of(context).canPop()) {
+    //     Navigator.of(context).pop();
+    //   }
+    // });
   }
 
   Future<void> _getGift(Size size) async {
