@@ -286,12 +286,20 @@ class EventRepository {
   }
 
   Future<void> pariticipateEvent(String userId, String eventId) async {
-    final participation = {
-      "eventId": eventId,
-      "userId": userId,
-      "createdAt": getCurrentSeconds(),
-    };
-    await _supabase.from("event_participants").insert(participation);
+    final existing = await _supabase
+        .from("event_participants")
+        .select('eventId')
+        .eq("eventId", eventId)
+        .eq("userId", userId);
+
+    if (existing.isEmpty) {
+      final participation = {
+        "eventId": eventId,
+        "userId": userId,
+        "createdAt": getCurrentSeconds(),
+      };
+      await _supabase.from("event_participants").insert(participation);
+    }
   }
 
   // Future<List<dynamic>> getEventUserScore(
