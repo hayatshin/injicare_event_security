@@ -95,6 +95,8 @@ class _EventDetailPointScreenState
   // }
 
   Future<void> _participateEvent() async {
+    if (_myParticipation) return;
+
     int userAge = widget.userProfile.userAge != null
         ? int.parse(widget.userProfile.userAge!)
         : 0;
