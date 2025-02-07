@@ -25,45 +25,45 @@ class InjicareColor {
 
   InjicareColor({this.context}) {
     primary50 = context == null
-        ? const Color(0xffFF2D78)
+        ? const Color(0xfff62459)
         : isDarkMode(context!)
-            ? const Color(0xffFF2D78)
-            : const Color(0xffFF2D78);
+            ? const Color(0xfff62459)
+            : const Color(0xfff62459);
     primary40 = context == null
-        ? const Color(0xffFF7AA9)
+        ? const Color(0xffF97B9B)
         : isDarkMode(context!)
-            ? const Color(0xffFF7AA9)
-            : const Color(0xffFF7AA9);
+            ? const Color(0xffF97B9B)
+            : const Color(0xffF97B9B);
     primary30 = context == null
-        ? const Color(0xffFFB4CE)
+        ? const Color(0xffFBA7BC)
         : isDarkMode(context!)
-            ? const Color(0xffFFB4CE)
-            : const Color(0xffFFB4CE);
+            ? const Color(0xffFBA7BC)
+            : const Color(0xffFBA7BC);
     primary20 = context == null
-        ? const Color(0xffFFE2EC)
+        ? const Color(0xffFDD3DD)
         : isDarkMode(context!)
-            ? const Color(0xffFFE2EC)
-            : const Color(0xffFFE2EC);
+            ? const Color(0xffFDD3DD)
+            : const Color(0xffFDD3DD);
     secondary50 = context == null
-        ? const Color(0xff1B3883)
+        ? const Color(0xff277EFF)
         : isDarkMode(context!)
-            ? const Color(0xffC6D4F8)
-            : const Color(0xff1B3883);
+            ? const Color(0xffD3E5FF)
+            : const Color(0xff277EFF);
     secondary40 = context == null
-        ? const Color(0xff4063BC)
+        ? const Color(0xff7DB1FF)
         : isDarkMode(context!)
-            ? const Color(0xff819DE4)
-            : const Color(0xff4063BC);
+            ? const Color(0xffA8CBFF)
+            : const Color(0xff7DB1FF);
     secondary30 = context == null
-        ? const Color(0xff819DE4)
+        ? const Color(0xffA8CBFF)
         : isDarkMode(context!)
-            ? const Color(0xff4063BC)
-            : const Color(0xff819DE4);
+            ? const Color(0xff7DB1FF)
+            : const Color(0xffA8CBFF);
     secondary20 = context == null
-        ? const Color(0xffC6D4F8)
+        ? const Color(0xffD3E5FF)
         : isDarkMode(context!)
-            ? const Color(0xff1B3883)
-            : const Color(0xffC6D4F8);
+            ? const Color(0xff277EFF)
+            : const Color(0xffD3E5FF);
     gray100 = context == null
         ? const Color(0xff151515)
         : isDarkMode(context!)

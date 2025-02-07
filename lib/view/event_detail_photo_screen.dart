@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_skeleton_ui/flutter_skeleton_ui.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:injicare_event/constants/gaps.dart';
@@ -12,8 +11,9 @@ import 'package:injicare_event/models/photo_image_model.dart';
 import 'package:injicare_event/models/user_profile.dart';
 import 'package:injicare_event/repos/event_repo.dart';
 import 'package:injicare_event/utils.dart';
-import 'package:injicare_event/view/event_detail_multiple_scores_screen.dart';
 import 'package:injicare_event/view_models/event_view_model.dart';
+import 'package:injicare_event/widgets/button_widgets.dart';
+import 'package:injicare_event/widgets/desc_tile_widgets.dart';
 import 'package:injicare_event/widgets/event_detail_template.dart';
 import 'package:injicare_event/widgets/photo_image_card.dart';
 
@@ -218,210 +218,56 @@ class _EventDetailPointScreenState
         completeScoreLoading: _completeScoreLoading,
         eventModel: stateEventModel,
         button: !_myParticipationLoadingComplete || !_completeScoreLoading
-            ? Row(
+            ? const EventLoadingButton()
+            : EventDefaultButton(
+                eventFunction: stateEventModel.state == "종료"
+                    ? null
+                    : !_myParticipation
+                        ? _participateEvent
+                        : null,
+                text: stateEventModel.state == "종료"
+                    ? "종료된 행사입니다"
+                    : !_myParticipation
+                        ? "사진 제출하기"
+                        : "이미 참여했습니다",
+                buttonColor: stateEventModel.state == "종료"
+                    ? InjicareColor(context: context).gray70
+                    : !_myParticipation
+                        ? InjicareColor(context: context).primary50
+                        : InjicareColor(context: context).gray70,
+              ),
+        userPointWidget: Container(),
+        pointMethodWidget: Container(),
+        specialWidget: _imagesList.isNotEmpty
+            ? Column(
                 children: [
-                  Expanded(
-                    child: SkeletonAvatar(
-                      style: SkeletonAvatarStyle(
-                        height: 55,
-                        borderRadius: BorderRadius.circular(
-                          Sizes.size5,
-                        ),
-                      ),
-                    ),
+                  const EventHeader(
+                    headerText: "출품작들",
                   ),
+                  CustomScrollView(
+                    shrinkWrap: true,
+                    slivers: [
+                      SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                          (context, index) {
+                            final dataKey = GlobalKey();
+                            if (index == _imagesList.length - 1) {
+                              lastParticipantKey.value = dataKey;
+                            }
+                            return PhotoImageCard(
+                              key: dataKey,
+                              index: index + 1,
+                              photoImageModel: _imagesList[index],
+                            );
+                          },
+                          childCount: _imagesList.length,
+                        ),
+                      )
+                    ],
+                  )
                 ],
               )
-            : stateEventModel.state == "종료"
-                ? Container(
-                    height: 55,
-                    decoration: BoxDecoration(
-                      color: InjicareColor(context: context).gray50,
-                      borderRadius: BorderRadius.circular(
-                        Sizes.size5,
-                      ),
-                      border: Border.all(
-                        color: Colors.black,
-                        width: 2,
-                      ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "종료된 행사입니다",
-                        style: InjicareFont().body01.copyWith(
-                              color: Colors.white,
-                            ),
-                      ),
-                    ),
-                  )
-                : !_myParticipation
-                    ? GestureDetector(
-                        onTap: _participateEvent,
-                        child: Container(
-                          height: 55,
-                          decoration: BoxDecoration(
-                            color: InjicareColor(context: context).primary50,
-                            borderRadius: BorderRadius.circular(
-                              Sizes.size5,
-                            ),
-                            border: Border.all(
-                              color: Colors.black,
-                              width: 2,
-                            ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              "사진 제출하고 참여하기",
-                              style: InjicareFont().body01.copyWith(
-                                    color: Colors.white,
-                                  ),
-                            ),
-                          ),
-                        ),
-                      )
-                    : Container(
-                        height: 55,
-                        decoration: BoxDecoration(
-                          color: InjicareColor(context: context).gray50,
-                          borderRadius: BorderRadius.circular(
-                            Sizes.size5,
-                          ),
-                          border: Border.all(
-                            color: Colors.black,
-                            width: 2,
-                          ),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "참여 중입니다",
-                            style: InjicareFont().body01.copyWith(
-                                  color: Colors.white,
-                                ),
-                          ),
-                        ),
-                      ),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Flexible(
-                  child: Text(
-                    widget.eventModel.title,
-                    softWrap: true,
-                    style: InjicareFont().headline02,
-                    overflow: TextOverflow.visible,
-                  ),
-                ),
-              ],
-            ),
-            Gaps.v40,
-
-            // 참여
-            !_myParticipationLoadingComplete
-                ? Container()
-                : !_myParticipation
-                    ? Column(
-                        children: [
-                          Container(
-                            decoration: const BoxDecoration(),
-                            child: Image.network(
-                              widget.eventModel.eventImage,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          Gaps.v24,
-                          const DividerWidget(),
-                          const EventHeader(
-                            headerText: "설명",
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Flexible(
-                                child: Text(
-                                  widget.eventModel.description,
-                                  style: InjicareFont().body02,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const DividerWidget(),
-                          const EventHeader(
-                            headerText: "행사 개요",
-                          ),
-                          FutureBuilder(
-                            future: ref
-                                .read(eventRepo)
-                                .convertContractRegionIdToName(
-                                    widget.eventModel.contractRegionId ?? ""),
-                            builder: (context, snapshot) {
-                              if (snapshot.hasData) {
-                                return EventInfoTile(
-                                    header: "주최 기관",
-                                    info: snapshot.data == "-"
-                                        ? "인지케어"
-                                        : "${snapshot.data}");
-                              } else if (snapshot.hasError) {
-                                // ignore: avoid_print
-                                print("name: ${snapshot.error}");
-                              }
-                              return Container();
-                            },
-                          ),
-                          Gaps.v10,
-                          EventInfoTile(
-                              header: "행사 진행일",
-                              info:
-                                  "${widget.eventModel.startDate} ~ ${widget.eventModel.endDate}"),
-                          Gaps.v10,
-                          EventInfoTile(
-                              header: "진행 상황",
-                              info: "${widget.eventModel.state}"),
-                          Gaps.v10,
-                          EventInfoTile(
-                              header: "달성 인원",
-                              info: widget.eventModel.achieversNumber != 0
-                                  ? "${widget.eventModel.achieversNumber}명"
-                                  : "제한 없음"),
-                          Gaps.v10,
-                          EventInfoTile(
-                              header: "연령 제한",
-                              info: widget.eventModel.ageLimit != 0
-                                  ? "${widget.eventModel.ageLimit}세 이상"
-                                  : "제한 없음"),
-                          Gaps.v20,
-                        ],
-                      )
-                    : Column(
-                        children: [
-                          const EventHeader(
-                            headerText: "출품작들",
-                          ),
-                          CustomScrollView(
-                            shrinkWrap: true,
-                            slivers: [
-                              SliverList(
-                                delegate: SliverChildBuilderDelegate(
-                                  (context, index) {
-                                    final dataKey = GlobalKey();
-                                    if (index == _imagesList.length - 1) {
-                                      lastParticipantKey.value = dataKey;
-                                    }
-                                    return PhotoImageCard(
-                                      key: dataKey,
-                                      index: index + 1,
-                                      photoImageModel: _imagesList[index],
-                                    );
-                                  },
-                                  childCount: _imagesList.length,
-                                ),
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-          ],
-        ),
+            : Container(),
       ),
     );
   }
