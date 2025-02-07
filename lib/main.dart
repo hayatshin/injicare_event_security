@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:injicare_event/constants/sizes.dart';
+import 'package:injicare_event/injicare_color.dart';
 import 'package:injicare_event/router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -40,16 +41,16 @@ class MyApp extends ConsumerWidget {
         fontFamily: "Pretendard",
         textTheme: Typography.blackMountainView,
         scaffoldBackgroundColor: Colors.white,
-        colorScheme: const ColorScheme.light(
-          primary: Color(0xFFFF2D78),
-          secondary: Color(0xfff3b4c9),
+        colorScheme: ColorScheme.light(
+          primary: InjicareColor().primary50,
+          secondary: InjicareColor().primary20,
         ),
-        textSelectionTheme: const TextSelectionThemeData(
-          cursorColor: Color(0xFFFF2D78),
-        ),
+        // textSelectionTheme: const TextSelectionThemeData(
+        //   cursorColor: InjicareColor(),
+        // ),
         navigationBarTheme: NavigationBarThemeData(
           elevation: 5.0,
-          surfaceTintColor: Colors.grey.shade200,
+          surfaceTintColor: const Color.fromARGB(255, 68, 41, 41),
           indicatorColor: Colors.pinkAccent.shade100.withOpacity(0.1),
           labelTextStyle: WidgetStateProperty.all(
             TextStyle(
@@ -65,7 +66,7 @@ class MyApp extends ConsumerWidget {
           ),
         ),
         chipTheme: ChipThemeData(
-          checkmarkColor: const Color(0xFFFF2D78),
+          checkmarkColor: InjicareColor().primary50,
           side: BorderSide(
             color: Colors.grey.shade500,
           ),
@@ -76,13 +77,13 @@ class MyApp extends ConsumerWidget {
       ),
       darkTheme: ThemeData(
         scaffoldBackgroundColor: Colors.black,
-        primaryColor: const Color(0xFFFF2D78),
-        colorScheme: const ColorScheme.dark(
-          primary: Color(0xFFFF2D78),
-          secondary: Color(0xfff3b4c9),
+        primaryColor: InjicareColor().primary50,
+        colorScheme: ColorScheme.dark(
+          primary: InjicareColor().primary50,
+          secondary: InjicareColor().primary20,
         ),
-        textSelectionTheme: const TextSelectionThemeData(
-          cursorColor: Color(0xFFFF2D78),
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: InjicareColor().primary50,
         ),
         navigationBarTheme: NavigationBarThemeData(
           elevation: 5.0,

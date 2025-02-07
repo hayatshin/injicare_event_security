@@ -711,3 +711,8 @@ void closeKeyboard(BuildContext context) {
     FocusScope.of(context).requestFocus(FocusNode());
   });
 }
+
+String formatNumber(int number) {
+  final formatter = NumberFormat('#,###');
+  return formatter.format(number);
+}

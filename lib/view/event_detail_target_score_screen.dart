@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_skeleton_ui/flutter_skeleton_ui.dart';
 import 'package:injicare_event/constants/gaps.dart';
 import 'package:injicare_event/constants/sizes.dart';
 import 'package:injicare_event/injicare_color.dart';
@@ -9,10 +8,11 @@ import 'package:injicare_event/models/event_model.dart';
 import 'package:injicare_event/models/user_profile.dart';
 import 'package:injicare_event/repos/event_repo.dart';
 import 'package:injicare_event/utils.dart';
-import 'package:injicare_event/view/event_detail_multiple_scores_screen.dart';
 import 'package:injicare_event/view_models/event_view_model.dart';
+import 'package:injicare_event/widgets/button_widgets.dart';
+import 'package:injicare_event/widgets/desc_tile_widgets.dart';
 import 'package:injicare_event/widgets/event_detail_template.dart';
-import 'package:lottie/lottie.dart';
+import 'package:injicare_event/widgets/progress/linear_progress_widget.dart';
 
 class EventDetailTargetScoreScreen extends ConsumerStatefulWidget {
   final EventModel eventModel;
@@ -199,443 +199,153 @@ class _EventDetailPointScreenState
       button: !_myParticipationLoadingComplete ||
               !_myApplyForGiftLoadingComplete ||
               !_completeScoreLoading
-          ? Row(
-              children: [
-                Expanded(
-                  child: SkeletonAvatar(
-                    style: SkeletonAvatarStyle(
-                      height: 55,
-                      borderRadius: BorderRadius.circular(
-                        Sizes.size5,
-                      ),
-                    ),
-                  ),
+          ? const EventLoadingButton()
+          : EventDefaultButton(
+              eventFunction: stateEventModel.state == "종료"
+                  ? null
+                  : !stateEventModel.userAchieveOrNot!
+                      ? !_myParticipation
+                          ? _participateEvent
+                          : null
+                      : _myApplyForGift
+                          ? null
+                          : () => _getGift(size),
+              buttonColor: stateEventModel.state == "종료"
+                  ? InjicareColor(context: context).gray70
+                  : !stateEventModel.userAchieveOrNot!
+                      ? !_myParticipation
+                          ? InjicareColor(context: context).primary50
+                          : InjicareColor(context: context).gray70
+                      : _myApplyForGift
+                          ? InjicareColor(context: context).gray70
+                          : InjicareColor(context: context).primary50,
+              text: stateEventModel.state == "종료"
+                  ? "종료된 행사입니다"
+                  : !stateEventModel.userAchieveOrNot!
+                      ? !_myParticipation
+                          ? "참여하기"
+                          : "참여 중입니다"
+                      : _myApplyForGift
+                          ? "선물 신청 완료"
+                          : "선물 받기",
+            ),
+      userPointWidget: Column(
+        children: [
+          Text(
+            "현재 나의 점수",
+            style: InjicareFont().body01.copyWith(
+                  fontWeight: FontWeight.w400,
+                  color: InjicareColor(context: context).gray60,
                 ),
-              ],
-            )
-          : stateEventModel.state == "종료"
-              ? Container(
-                  height: 55,
-                  decoration: BoxDecoration(
-                    color: InjicareColor(context: context).gray50,
-                    borderRadius: BorderRadius.circular(
-                      Sizes.size5,
-                    ),
-                    border: Border.all(
-                      color: Colors.black,
-                      width: 2,
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      "종료된 행사입니다",
-                      style: InjicareFont().body01.copyWith(
-                            color: Colors.white,
-                          ),
-                    ),
+          ),
+          Gaps.v20,
+          _myParticipationLoadingComplete &&
+                  _myParticipation &&
+                  _completeScoreLoading
+              ? Text(
+                  "${formatNumber(stateEventModel.userTotalPoint ?? 0)}점",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: Sizes.size36,
+                    color: InjicareColor(context: context).gray100,
                   ),
                 )
-              : !stateEventModel.userAchieveOrNot!
-                  ? !_myParticipation
-                      ? GestureDetector(
-                          onTap: _participateEvent,
-                          child: Container(
-                            height: 55,
-                            decoration: BoxDecoration(
-                              color: InjicareColor().primary50,
-                              borderRadius: BorderRadius.circular(
-                                Sizes.size5,
-                              ),
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 2,
-                              ),
-                            ),
-                            child: Center(
-                              child: Text(
-                                "참여하기",
-                                style: InjicareFont().body01.copyWith(
-                                      color: Colors.white,
-                                    ),
-                              ),
-                            ),
-                          ),
-                        )
-                      : GestureDetector(
-                          onTap: _participateEvent,
-                          child: Container(
-                            height: 55,
-                            decoration: BoxDecoration(
-                              color: InjicareColor(context: context).gray50,
-                              borderRadius: BorderRadius.circular(
-                                Sizes.size5,
-                              ),
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 2,
-                              ),
-                            ),
-                            child: Center(
-                              child: Text(
-                                "참여 중입니다",
-                                style: InjicareFont().body01.copyWith(
-                                      color: Colors.white,
-                                    ),
-                              ),
-                            ),
-                          ),
-                        )
-                  : _myApplyForGift
-                      ? Container(
-                          height: 55,
-                          decoration: BoxDecoration(
-                            color: InjicareColor(context: context).gray50,
-                            borderRadius: BorderRadius.circular(
-                              Sizes.size5,
-                            ),
-                            border: Border.all(
-                              color: isDarkMode(context)
-                                  ? Colors.white
-                                  : Colors.black,
-                              width: 2,
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "선물 신청 완료!",
-                                style: InjicareFont().body01.copyWith(
-                                      color: Colors.white,
-                                    ),
-                              ),
-                            ],
-                          ),
-                        )
-                      : GestureDetector(
-                          onTap: () async => await _getGift(size),
-                          child: Container(
-                            height: 55,
-                            decoration: BoxDecoration(
-                              color: InjicareColor().primary50,
-                              borderRadius: BorderRadius.circular(
-                                Sizes.size5,
-                              ),
-                              border: Border.all(
-                                color: isDarkMode(context)
-                                    ? Colors.white
-                                    : Colors.black,
-                                width: 2,
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "누르고",
-                                  style: InjicareFont().body01.copyWith(
-                                        color: Colors.white,
-                                      ),
-                                ),
-                                Gaps.h10,
-                                Image.asset(
-                                  "assets/jpg/gift.png",
-                                  width: 40,
-                                ),
-                                Gaps.h10,
-                                Text(
-                                  "받기",
-                                  style: InjicareFont().body01.copyWith(
-                                        color: Colors.white,
-                                      ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-      child: Column(
+              : Text(
+                  "0점",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: Sizes.size36,
+                    color: InjicareColor(context: context).gray100,
+                  ),
+                ),
+          Gaps.v10,
+          LinearProgressWidget(
+            totalScore: stateEventModel.targetScore,
+            userScore: stateEventModel.userTotalPoint ?? 1,
+            width: size.width * 0.8,
+          )
+        ],
+      ),
+      pointMethodWidget: Row(
         children: [
-          Row(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Flexible(
-                child: Text(
-                  widget.eventModel.title,
-                  softWrap: true,
-                  style: InjicareFont().headline02,
-                  overflow: TextOverflow.visible,
+              const EventHeader(headerText: "점수 계산 방법"),
+              if (widget.eventModel.stepPoint > 0)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    PointTile(
+                      header: "걸음수 1000보",
+                      point: widget.eventModel.stepPoint,
+                    ),
+                    DailyMaxTile(maxText: "${widget.eventModel.maxStepCount}보"),
+                    Gaps.v8,
+                  ],
                 ),
-              ),
-            ],
-          ),
-          Gaps.v40,
-          !_myParticipationLoadingComplete
-              ? Container()
-              : _myParticipation
-                  ? !_completeScoreLoading
-                      ? Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SkeletonLine(
-                                  style: SkeletonLineStyle(
-                                    width: size.width * 0.5,
-                                    height: 20,
-                                    borderRadius: const BorderRadius.all(
-                                      Radius.circular(10),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Gaps.v32,
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SkeletonAvatar(
-                                  style: SkeletonAvatarStyle(
-                                    shape: BoxShape.circle,
-                                    width: size.width * 0.4,
-                                  ),
-                                ),
-                              ],
-                            )
-                          ],
-                        )
-                      : Stack(
-                          children: [
-                            if (stateEventModel.userAchieveOrNot ?? false)
-                              SizedBox(
-                                width: 500,
-                                height: 200,
-                                child: LottieBuilder.asset(
-                                  "assets/anims/anim_fanfare.json",
-                                ),
-                              ),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(10),
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          "나의 행사 달성 상황",
-                                          style: InjicareFont().body03.copyWith(
-                                                color: InjicareColor(
-                                                        context: context)
-                                                    .gray80,
-                                              ),
-                                        ),
-                                        Gaps.v5,
-                                        Text(
-                                          "→ ${stateEventModel.userTotalPoint}점",
-                                          style: InjicareFont().body01.copyWith(
-                                                color:
-                                                    InjicareColor().primary50,
-                                              ),
-                                        ),
-                                        // 달성 시
-                                        Gaps.v20,
-                                        if (stateEventModel.userAchieveOrNot ??
-                                            false)
-                                          Column(
-                                            children: [
-                                              Text(
-                                                "달성했습니다!",
-                                                textAlign: TextAlign.center,
-                                                style: InjicareFont()
-                                                    .body01
-                                                    .copyWith(
-                                                      color: InjicareColor(
-                                                              context: context)
-                                                          .secondary50,
-                                                    ),
-                                              ),
-                                              Gaps.v20,
-                                              Text(
-                                                "아래 [누르고 선물 받기]\n버튼을 눌러서\n선물을 받아가세요",
-                                                textAlign: TextAlign.center,
-                                                style: InjicareFont()
-                                                    .body07
-                                                    .copyWith(
-                                                      color: InjicareColor(
-                                                              context: context)
-                                                          .secondary50,
-                                                    ),
-                                              ),
-                                              Gaps.v32,
-                                            ],
-                                          ),
-                                        if (!stateEventModel.userAchieveOrNot!)
-                                          Column(
-                                            children: [
-                                              MyProgressScreen(
-                                                eventModel: widget.eventModel,
-                                                userScore: stateEventModel
-                                                    .userTotalPoint!,
-                                              ),
-                                            ],
-                                          ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        )
-                  : UserPointLoadingWidget(
-                      size: size,
-                      eventModel: widget.eventModel,
-                    ),
-          Gaps.v24,
-          Container(
-            decoration: const BoxDecoration(),
-            child: Image.network(
-              widget.eventModel.eventImage,
-              fit: BoxFit.cover,
-            ),
-          ),
-          Gaps.v24,
-          const EventHeader(headerText: "설명"),
-          Row(
-            children: [
-              Flexible(
-                child: Text(
-                  widget.eventModel.description,
-                  style: InjicareFont().body02,
+              if (widget.eventModel.diaryPoint > 0)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    PointTile(
+                        header: "일기 1회", point: widget.eventModel.diaryPoint),
+                    const DailyMaxTile(maxText: "1회"),
+                    Gaps.v8,
+                  ],
                 ),
-              ),
-            ],
-          ),
-          const DividerWidget(),
-          const EventHeader(headerText: "행사 개요"),
-          FutureBuilder(
-            future: ref.read(eventRepo).convertContractRegionIdToName(
-                widget.eventModel.contractRegionId ?? ""),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return EventInfoTile(
-                    header: "주최 기관",
-                    info: snapshot.data == "-" ? "인지케어" : "${snapshot.data}");
-              } else if (snapshot.hasError) {
-                // ignore: avoid_print
-                print("name: ${snapshot.error}");
-              }
-              return Container();
-            },
-          ),
-          Gaps.v10,
-          EventInfoTile(
-              header: "행사 진행일",
-              info:
-                  "${widget.eventModel.startDate} ~ ${widget.eventModel.endDate}"),
-          Gaps.v10,
-          EventInfoTile(header: "진행 상황", info: "${widget.eventModel.state}"),
-          Gaps.v10,
-          EventInfoTile(
-              header: "목표 점수", info: "${widget.eventModel.targetScore}점"),
-          Gaps.v10,
-          EventInfoTile(
-              header: "달성 인원",
-              info: widget.eventModel.achieversNumber != 0
-                  ? "${widget.eventModel.achieversNumber}명"
-                  : "제한 없음"),
-          Gaps.v10,
-          EventInfoTile(
-              header: "연령 제한",
-              info: widget.eventModel.ageLimit != 0
-                  ? "${widget.eventModel.ageLimit}세 이상"
-                  : "제한 없음"),
-          const DividerWidget(),
-          Row(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const EventHeader(headerText: "점수 계산 방법"),
-                  if (widget.eventModel.stepPoint > 0)
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        PointTile(
-                          header: "걸음수 1000보",
-                          point: widget.eventModel.stepPoint,
-                        ),
-                        DailyMaxTile(
-                            maxText: "${widget.eventModel.maxStepCount}보"),
-                        Gaps.v4,
-                      ],
-                    ),
-                  if (widget.eventModel.diaryPoint > 0)
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        PointTile(
-                            header: "일기 1회",
-                            point: widget.eventModel.diaryPoint),
-                        const DailyMaxTile(maxText: "1회"),
-                        Gaps.v4,
-                      ],
-                    ),
-                  if (widget.eventModel.quizPoint > 0)
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        PointTile(
-                            header: "문제 풀기 1회",
-                            point: widget.eventModel.quizPoint),
-                        const DailyMaxTile(maxText: "1회"),
-                        Gaps.v4,
-                      ],
-                    ),
-                  if (widget.eventModel.commentPoint > 0)
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        PointTile(
-                            header: "댓글 1회",
-                            point: widget.eventModel.commentPoint),
-                        if ((widget.eventModel.maxCommentCount) > 0)
-                          DailyMaxTile(
-                              maxText: "${widget.eventModel.maxCommentCount}회"),
-                        Gaps.v4,
-                      ],
-                    ),
-                  if (widget.eventModel.likePoint > 0)
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        PointTile(
-                            header: "좋아요 1회",
-                            point: widget.eventModel.likePoint),
-                        if ((widget.eventModel.maxLikeCount) > 0)
-                          DailyMaxTile(
-                              maxText: "${widget.eventModel.maxLikeCount}회"),
-                        Gaps.v4,
-                      ],
-                    ),
-                  if (widget.eventModel.invitationPoint > 0)
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        PointTile(
-                            header: "친구초대 1회",
-                            point: widget.eventModel.invitationPoint),
-                        if ((widget.eventModel.maxInvitationCount) > 0)
-                          DailyMaxTile(
-                              maxText:
-                                  "${widget.eventModel.maxInvitationCount}회"),
-                        Gaps.v4,
-                      ],
-                    ),
-                ],
-              ),
+              if (widget.eventModel.quizPoint > 0)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    PointTile(
+                        header: "문제 풀기 1회", point: widget.eventModel.quizPoint),
+                    const DailyMaxTile(maxText: "1회"),
+                    Gaps.v8,
+                  ],
+                ),
+              if (widget.eventModel.commentPoint > 0)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    PointTile(
+                        header: "댓글 1회", point: widget.eventModel.commentPoint),
+                    if ((widget.eventModel.maxCommentCount) > 0)
+                      DailyMaxTile(
+                          maxText: "${widget.eventModel.maxCommentCount}회"),
+                    Gaps.v8,
+                  ],
+                ),
+              if (widget.eventModel.likePoint > 0)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    PointTile(
+                        header: "좋아요 1회", point: widget.eventModel.likePoint),
+                    if ((widget.eventModel.maxLikeCount) > 0)
+                      DailyMaxTile(
+                          maxText: "${widget.eventModel.maxLikeCount}회"),
+                    Gaps.v8,
+                  ],
+                ),
+              if (widget.eventModel.invitationPoint > 0)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    PointTile(
+                        header: "친구초대 1회",
+                        point: widget.eventModel.invitationPoint),
+                    if ((widget.eventModel.maxInvitationCount) > 0)
+                      DailyMaxTile(
+                          maxText: "${widget.eventModel.maxInvitationCount}회"),
+                    Gaps.v8,
+                  ],
+                ),
             ],
           ),
         ],
       ),
+      specialWidget: Container(),
     );
   }
 }
