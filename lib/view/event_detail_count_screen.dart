@@ -202,14 +202,19 @@ class _EventDetailCountScreenState
             ),
       userPointWidget: Column(
         children: [
-          Text(
-            "현재 나의 달성",
-            style: InjicareFont().body01.copyWith(
-                  fontWeight: FontWeight.w400,
-                  color: InjicareColor(context: context).gray60,
+          if (_myParticipation)
+            Column(
+              children: [
+                Text(
+                  "현재 나의 달성",
+                  style: InjicareFont().body01.copyWith(
+                        fontWeight: FontWeight.w400,
+                        color: InjicareColor(context: context).gray60,
+                      ),
                 ),
-          ),
-          Gaps.v20,
+                Gaps.v20,
+              ],
+            ),
           _myParticipationLoadingComplete &&
                   _myParticipation &&
                   _completeScoreLoading
