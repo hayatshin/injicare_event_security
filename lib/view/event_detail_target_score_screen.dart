@@ -68,9 +68,6 @@ class _EventDetailPointScreenState
       setState(() {
         _myParticipationLoadingComplete = true;
         _myParticipation = dbMyParticipation.isNotEmpty;
-        // _participatingAt = dbMyParticipation.isNotEmpty
-        //     ? dbMyParticipation[0]["createdAt"]
-        //     : 0;
       });
     }
   }
@@ -86,28 +83,6 @@ class _EventDetailPointScreenState
       });
     }
   }
-
-  // Future<int> _getUserScore() async {
-  //   int startSeconds =
-  //       convertStartDateStringToSeconds(widget.eventModel.startDate);
-  //   int userStartSeconds =
-  //       _participatingAt > startSeconds ? _participatingAt : startSeconds;
-
-  //   int endSeconds = convertEndDateStringToSeconds(widget.eventModel.endDate);
-  //   List<dynamic> userPoint = await ref.read(eventRepo).getEventUserScore(
-  //       userStartSeconds,
-  //       endSeconds,
-  //       widget.eventModel.stepPoint,
-  //       widget.eventModel.diaryPoint,
-  //       widget.eventModel.commentPoint,
-  //       widget.eventModel.likePoint);
-
-  //   if (userPoint.isNotEmpty) {
-  //     return userPoint[0]["totalPoint"];
-  //   } else {
-  //     return 0;
-  //   }
-  // }
 
   Future<void> _participateEvent() async {
     if (_myParticipation) return;
@@ -137,13 +112,6 @@ class _EventDetailPointScreenState
       stateEventModel = participantUpdateEventModel;
       _myParticipation = true;
     });
-
-    // Future.delayed(const Duration(seconds: 1), () {
-    //   if (!mounted) return;
-    //   if (Navigator.of(context).canPop()) {
-    //     Navigator.of(context).pop();
-    //   }
-    // });
   }
 
   Future<void> _getGift(Size size) async {
@@ -154,26 +122,10 @@ class _EventDetailPointScreenState
     bool canGetGift = achieverNumbers == 0 ? true : userGifts < achieverNumbers;
 
     if (!mounted) return;
-    showModalBottomSheet(
-      isScrollControlled: true,
-      backgroundColor:
-          isDarkMode(context) ? Colors.grey.shade900 : Colors.white,
-      elevation: 0,
-      context: context,
-      builder: (context) {
-        return MediaQuery(
-          data: MediaQuery.of(context)
-              .copyWith(textScaler: const TextScaler.linear(1.0)),
-          child: SizedBox(
-            width: size.width,
-            height: size.height * 0.7,
-            child: !canGetGift
-                ? const FirstComesFistServesEndWidget()
-                : const GiftRequestWidget(),
-          ),
-        );
-      },
-    );
+
+    !canGetGift
+        ? showWarningSnackBar(context, "선착순이 마감되었습니다")
+        : showCompletingSnackBar(context, "선물 신청이 완료되었어요");
 
     if (canGetGift) {
       await ref.read(eventRepo).submitEventGift(
@@ -183,10 +135,6 @@ class _EventDetailPointScreenState
         _myApplyForGift = true;
       });
     }
-
-    // Future.delayed(const Duration(seconds: 1), () {
-    //   Navigator.of(context).pop();
-    // });
   }
 
   @override

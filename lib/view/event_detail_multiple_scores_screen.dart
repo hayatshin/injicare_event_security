@@ -71,28 +71,6 @@ class _EventDetailPointScreenState
     }
   }
 
-  // Future<int> _getUserScore() async {
-  //   int startSeconds =
-  //       convertStartDateStringToSeconds(widget.eventModel.startDate);
-  //   int userStartSeconds =
-  //       _participatingAt > startSeconds ? _participatingAt : startSeconds;
-
-  //   int endSeconds = convertEndDateStringToSeconds(widget.eventModel.endDate);
-  //   List<dynamic> userPoint = await ref.read(eventRepo).getEventUserScore(
-  //       userStartSeconds,
-  //       endSeconds,
-  //       widget.eventModel.stepPoint,
-  //       widget.eventModel.diaryPoint,
-  //       widget.eventModel.commentPoint,
-  //       widget.eventModel.likePoint);
-
-  //   if (userPoint.isNotEmpty) {
-  //     return userPoint[0]["totalPoint"];
-  //   } else {
-  //     return 0;
-  //   }
-  // }
-
   Future<void> _participateEvent() async {
     if (_myParticipation) return;
 

@@ -8,7 +8,6 @@ import 'package:injicare_event/models/event_model.dart';
 import 'package:injicare_event/models/user_profile.dart';
 import 'package:injicare_event/repos/event_repo.dart';
 import 'package:injicare_event/utils.dart';
-import 'package:injicare_event/view/event_detail_target_score_screen.dart';
 import 'package:injicare_event/view_models/event_view_model.dart';
 import 'package:injicare_event/widgets/button_widgets.dart';
 import 'package:injicare_event/widgets/desc_tile_widgets.dart';
@@ -143,26 +142,9 @@ class _EventDetailCountScreenState
     bool canGetGift = achieverNumbers == 0 ? true : userGifts < achieverNumbers;
 
     if (!mounted) return;
-    showModalBottomSheet(
-      isScrollControlled: true,
-      backgroundColor:
-          isDarkMode(context) ? Colors.grey.shade900 : Colors.white,
-      elevation: 0,
-      context: context,
-      builder: (context) {
-        return MediaQuery(
-          data: MediaQuery.of(context)
-              .copyWith(textScaler: const TextScaler.linear(1.0)),
-          child: SizedBox(
-            width: size.width,
-            height: size.height * 0.7,
-            child: !canGetGift
-                ? const FirstComesFistServesEndWidget()
-                : const GiftRequestWidget(),
-          ),
-        );
-      },
-    );
+    !canGetGift
+        ? showWarningSnackBar(context, "선착순이 마감되었습니다")
+        : showCompletingSnackBar(context, "선물 신청이 완료되었어요");
 
     if (canGetGift) {
       await ref.read(eventRepo).submitEventGift(
