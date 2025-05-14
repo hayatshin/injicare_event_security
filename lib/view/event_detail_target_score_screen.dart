@@ -190,33 +190,31 @@ class _EventDetailPointScreenState
                       ),
                 ),
                 Gaps.v20,
+                _myParticipationLoadingComplete && _completeScoreLoading
+                    ? Text(
+                        "${formatNumber(stateEventModel.userTotalPoint ?? 0)}점",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w900,
+                          fontSize: Sizes.size36,
+                          color: InjicareColor(context: context).gray100,
+                        ),
+                      )
+                    : Text(
+                        "0점",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w900,
+                          fontSize: Sizes.size36,
+                          color: InjicareColor(context: context).gray100,
+                        ),
+                      ),
+                Gaps.v10,
+                LinearProgressWidget(
+                  totalScore: stateEventModel.targetScore,
+                  userScore: stateEventModel.userTotalPoint ?? 1,
+                  width: size.width * 0.8,
+                )
               ],
             ),
-          _myParticipationLoadingComplete &&
-                  _myParticipation &&
-                  _completeScoreLoading
-              ? Text(
-                  "${formatNumber(stateEventModel.userTotalPoint ?? 0)}점",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w900,
-                    fontSize: Sizes.size36,
-                    color: InjicareColor(context: context).gray100,
-                  ),
-                )
-              : Text(
-                  "0점",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w900,
-                    fontSize: Sizes.size36,
-                    color: InjicareColor(context: context).gray100,
-                  ),
-                ),
-          Gaps.v10,
-          LinearProgressWidget(
-            totalScore: stateEventModel.targetScore,
-            userScore: stateEventModel.userTotalPoint ?? 1,
-            width: size.width * 0.8,
-          )
         ],
       ),
       pointMethodWidget: Row(

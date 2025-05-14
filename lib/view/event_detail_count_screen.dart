@@ -213,46 +213,45 @@ class _EventDetailCountScreenState
                       ),
                 ),
                 Gaps.v20,
+                _myParticipationLoadingComplete && _completeScoreLoading
+                    ? Column(
+                        children: [
+                          if (widget.eventModel.diaryCount > 0)
+                            EachCountProgressWidget(
+                              eachText: "일기",
+                              userCount: stateEventModel.userDiaryCount ?? 0,
+                              eventCount: stateEventModel.diaryCount,
+                            ),
+                          if (widget.eventModel.quizCount > 0)
+                            EachCountProgressWidget(
+                              eachText: "문제 풀기",
+                              userCount: stateEventModel.userQuizCount ?? 0,
+                              eventCount: stateEventModel.quizCount,
+                            ),
+                          if (widget.eventModel.commentCount > 0)
+                            EachCountProgressWidget(
+                              eachText: "댓글",
+                              userCount: stateEventModel.userCommentCount ?? 0,
+                              eventCount: stateEventModel.commentCount,
+                            ),
+                          if (widget.eventModel.likeCount > 0)
+                            EachCountProgressWidget(
+                              eachText: "좋아요",
+                              userCount: stateEventModel.userLikeCount ?? 0,
+                              eventCount: stateEventModel.likeCount,
+                            ),
+                          if (widget.eventModel.invitationCount > 0)
+                            EachCountProgressWidget(
+                              eachText: "친구 초대",
+                              userCount:
+                                  stateEventModel.userInvitationCount ?? 0,
+                              eventCount: stateEventModel.invitationCount,
+                            ),
+                        ],
+                      )
+                    : Container(),
               ],
             ),
-          _myParticipationLoadingComplete &&
-                  _myParticipation &&
-                  _completeScoreLoading
-              ? Column(
-                  children: [
-                    if (widget.eventModel.diaryCount > 0)
-                      EachCountProgressWidget(
-                        eachText: "일기",
-                        userCount: stateEventModel.userDiaryCount ?? 0,
-                        eventCount: stateEventModel.diaryCount,
-                      ),
-                    if (widget.eventModel.quizCount > 0)
-                      EachCountProgressWidget(
-                        eachText: "문제 풀기",
-                        userCount: stateEventModel.userQuizCount ?? 0,
-                        eventCount: stateEventModel.quizCount,
-                      ),
-                    if (widget.eventModel.commentCount > 0)
-                      EachCountProgressWidget(
-                        eachText: "댓글",
-                        userCount: stateEventModel.userCommentCount ?? 0,
-                        eventCount: stateEventModel.commentCount,
-                      ),
-                    if (widget.eventModel.likeCount > 0)
-                      EachCountProgressWidget(
-                        eachText: "좋아요",
-                        userCount: stateEventModel.userLikeCount ?? 0,
-                        eventCount: stateEventModel.likeCount,
-                      ),
-                    if (widget.eventModel.invitationCount > 0)
-                      EachCountProgressWidget(
-                        eachText: "친구 초대",
-                        userCount: stateEventModel.userInvitationCount ?? 0,
-                        eventCount: stateEventModel.invitationCount,
-                      ),
-                  ],
-                )
-              : Container(),
         ],
       ),
       pointMethodWidget: Row(

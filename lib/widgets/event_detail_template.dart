@@ -207,11 +207,17 @@ class EventDetailTemplate extends ConsumerWidget {
                                                       info:
                                                           "${eventModel.state}"),
                                                   Gaps.v10,
-                                                  EventInfoTile(
-                                                      header: "목표 점수",
-                                                      info:
-                                                          "${eventModel.targetScore}점"),
-                                                  Gaps.v10,
+                                                  if (eventModel.targetScore !=
+                                                      0)
+                                                    Column(
+                                                      children: [
+                                                        EventInfoTile(
+                                                            header: "목표 점수",
+                                                            info:
+                                                                "${eventModel.targetScore}점"),
+                                                        Gaps.v10,
+                                                      ],
+                                                    ),
                                                   EventInfoTile(
                                                       header: "달성 인원",
                                                       info: eventModel

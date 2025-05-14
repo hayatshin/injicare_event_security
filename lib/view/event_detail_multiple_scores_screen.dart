@@ -141,25 +141,25 @@ class _EventDetailPointScreenState
                       ),
                 ),
                 Gaps.v20,
+                _completeScoreLoading
+                    ? Text(
+                        "${formatNumber(stateEventModel.userTotalPoint ?? 0)}점",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w900,
+                          fontSize: Sizes.size36,
+                          color: InjicareColor(context: context).gray100,
+                        ),
+                      )
+                    : Text(
+                        "0점",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w900,
+                          fontSize: Sizes.size36,
+                          color: InjicareColor(context: context).gray100,
+                        ),
+                      )
               ],
             ),
-          _myParticipation && _completeScoreLoading
-              ? Text(
-                  "${formatNumber(stateEventModel.userTotalPoint ?? 0)}점",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w900,
-                    fontSize: Sizes.size36,
-                    color: InjicareColor(context: context).gray100,
-                  ),
-                )
-              : Text(
-                  "0점",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w900,
-                    fontSize: Sizes.size36,
-                    color: InjicareColor(context: context).gray100,
-                  ),
-                ),
         ],
       ),
       pointMethodWidget: Row(
