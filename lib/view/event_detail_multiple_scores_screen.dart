@@ -106,8 +106,6 @@ class _EventDetailPointScreenState
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-
     return EventDetailTemplate(
       completeScoreLoading: _completeScoreLoading,
       eventModel: stateEventModel,
@@ -128,40 +126,42 @@ class _EventDetailPointScreenState
                       ? "참여하기"
                       : "참여 중입니다",
             ),
-      userPointWidget: Column(
-        children: [
-          if (_myParticipation)
-            Column(
+      userPointWidget: _myParticipationLoadingComplete
+          ? Column(
               children: [
-                Text(
-                  "현재 나의 점수",
-                  style: InjicareFont().body01.copyWith(
-                        fontWeight: FontWeight.w400,
-                        color: InjicareColor(context: context).gray60,
+                if (_myParticipation)
+                  Column(
+                    children: [
+                      Text(
+                        "현재 나의 점수",
+                        style: InjicareFont().body01.copyWith(
+                              fontWeight: FontWeight.w400,
+                              color: InjicareColor(context: context).gray60,
+                            ),
                       ),
-                ),
-                Gaps.v20,
-                _completeScoreLoading
-                    ? Text(
-                        "${formatNumber(stateEventModel.userTotalPoint ?? 0)}점",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w900,
-                          fontSize: Sizes.size36,
-                          color: InjicareColor(context: context).gray100,
-                        ),
-                      )
-                    : Text(
-                        "0점",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w900,
-                          fontSize: Sizes.size36,
-                          color: InjicareColor(context: context).gray100,
-                        ),
-                      )
+                      Gaps.v20,
+                      _completeScoreLoading
+                          ? Text(
+                              "${formatNumber(stateEventModel.userTotalPoint ?? 0)}점",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w900,
+                                fontSize: Sizes.size36,
+                                color: InjicareColor(context: context).gray100,
+                              ),
+                            )
+                          : Text(
+                              "0점",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w900,
+                                fontSize: Sizes.size36,
+                                color: InjicareColor(context: context).gray100,
+                              ),
+                            )
+                    ],
+                  ),
               ],
-            ),
-        ],
-      ),
+            )
+          : Container(),
       pointMethodWidget: Row(
         children: [
           Column(

@@ -177,46 +177,48 @@ class _EventDetailPointScreenState
                           ? "선물 신청 완료"
                           : "선물 받기",
             ),
-      userPointWidget: Column(
-        children: [
-          if (_myParticipation)
-            Column(
+      userPointWidget: _myParticipationLoadingComplete
+          ? Column(
               children: [
-                Text(
-                  "현재 나의 점수",
-                  style: InjicareFont().body01.copyWith(
-                        fontWeight: FontWeight.w400,
-                        color: InjicareColor(context: context).gray60,
+                if (_myParticipation)
+                  Column(
+                    children: [
+                      Text(
+                        "현재 나의 점수",
+                        style: InjicareFont().body01.copyWith(
+                              fontWeight: FontWeight.w400,
+                              color: InjicareColor(context: context).gray60,
+                            ),
                       ),
-                ),
-                Gaps.v20,
-                _myParticipationLoadingComplete && _completeScoreLoading
-                    ? Text(
-                        "${formatNumber(stateEventModel.userTotalPoint ?? 0)}점",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w900,
-                          fontSize: Sizes.size36,
-                          color: InjicareColor(context: context).gray100,
-                        ),
+                      Gaps.v20,
+                      _myParticipationLoadingComplete && _completeScoreLoading
+                          ? Text(
+                              "${formatNumber(stateEventModel.userTotalPoint ?? 0)}점",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w900,
+                                fontSize: Sizes.size36,
+                                color: InjicareColor(context: context).gray100,
+                              ),
+                            )
+                          : Text(
+                              "0점",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w900,
+                                fontSize: Sizes.size36,
+                                color: InjicareColor(context: context).gray100,
+                              ),
+                            ),
+                      Gaps.v10,
+                      LinearProgressWidget(
+                        totalScore: stateEventModel.targetScore,
+                        userScore: stateEventModel.userTotalPoint ?? 1,
+                        width: size.width * 0.8,
                       )
-                    : Text(
-                        "0점",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w900,
-                          fontSize: Sizes.size36,
-                          color: InjicareColor(context: context).gray100,
-                        ),
-                      ),
-                Gaps.v10,
-                LinearProgressWidget(
-                  totalScore: stateEventModel.targetScore,
-                  userScore: stateEventModel.userTotalPoint ?? 1,
-                  width: size.width * 0.8,
-                )
+                    ],
+                  ),
               ],
-            ),
-        ],
-      ),
+            )
+          : Container(),
       pointMethodWidget: Row(
         children: [
           Column(
