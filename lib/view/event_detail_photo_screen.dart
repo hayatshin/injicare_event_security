@@ -246,6 +246,7 @@ class _EventDetailPointScreenState
                   ),
                   CustomScrollView(
                     shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
                     slivers: [
                       SliverList(
                         delegate: SliverChildBuilderDelegate(
@@ -329,21 +330,23 @@ class _SelectPhotoWidgetState extends State<SelectPhotoWidget> {
         child: Padding(
           padding: const EdgeInsets.symmetric(
             vertical: 30,
-            horizontal: 16,
           ),
           child: Column(
             children: [
-              Row(
-                children: [
-                  Flexible(
-                    child: Text(
-                      "사진 제출하기",
-                      softWrap: true,
-                      style: InjicareFont().headline02,
-                      overflow: TextOverflow.visible,
+              Padding(
+                padding: const EdgeInsetsGeometry.symmetric(horizontal: 16),
+                child: Row(
+                  children: [
+                    Flexible(
+                      child: Text(
+                        "사진 제출하기",
+                        softWrap: true,
+                        style: InjicareFont().headline02,
+                        overflow: TextOverflow.visible,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               Gaps.v20,
               Expanded(
@@ -351,153 +354,176 @@ class _SelectPhotoWidgetState extends State<SelectPhotoWidget> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Gaps.v20,
-                      const EventHeader(
-                        headerText: "작품명",
-                      ),
-                      if (_tapSubmitPhotoEvent && _title.isEmpty)
-                        const EmptyWidget(
-                          text: "작품명을 작성해주세요",
-                        ),
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: IgnorePointer(
-                              ignoring: false,
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: InjicareColor(context: context)
-                                            .gray10,
-                                        borderRadius: BorderRadius.circular(
-                                          Sizes.size20,
-                                        ),
-                                      ),
-                                      clipBehavior: Clip.hardEdge,
-                                      child: TextFormField(
-                                        // controller: _shortAnswerControllder,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            _tapSubmitPhotoEvent = false;
-                                          });
-                                          _writeTitle(value);
-                                        },
-                                        maxLines: 1,
-                                        textAlignVertical:
-                                            TextAlignVertical.center,
-                                        style: InjicareFont().headline03,
-                                        decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          hintText: "작품 제목을 적어주세요",
-                                          hintStyle: InjicareFont()
-                                              .headline03
-                                              .copyWith(
-                                                color: InjicareColor(
-                                                        context: context)
-                                                    .gray50,
-                                              ),
-                                          contentPadding:
-                                              const EdgeInsets.symmetric(
-                                            horizontal: Sizes.size20,
-                                            vertical: 10,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const DividerWidget(),
-                      const EventHeader(
-                        headerText: "사진",
-                      ),
-                      if (_tapSubmitPhotoEvent && _photo == null)
-                        const EmptyWidget(
-                          text: "제출할 사진을 선택해주세요",
-                        ),
-                      GestureDetector(
-                        onTap: _selectPhoto,
+                      Padding(
+                        padding:
+                            const EdgeInsetsGeometry.symmetric(horizontal: 16),
                         child: Column(
                           children: [
-                            Container(
-                              width: 180,
-                              height: 180,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                border: Border.all(
-                                  color: InjicareColor(context: context).gray20,
-                                  width: 5,
-                                ),
-                              ),
-                              clipBehavior: Clip.hardEdge,
-                              child: _photo == null
-                                  ? Padding(
-                                      padding: const EdgeInsets.all(50),
-                                      child: ColorFiltered(
-                                        colorFilter: ColorFilter.mode(
-                                          InjicareColor(context: context)
-                                              .gray40,
-                                          BlendMode.srcIn,
-                                        ),
-                                        child: SvgPicture.asset(
-                                          "assets/svg/photo.svg",
-                                          width: 28,
-                                        ),
-                                      ),
-                                    )
-                                  : Container(
-                                      width: 180,
-                                      height: 180,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                      clipBehavior: Clip.hardEdge,
-                                      child: Image.network(
-                                        _photo!.path,
-                                        fit: BoxFit.cover,
-                                        frameBuilder: (context, child, frame,
-                                            wasSynchronouslyLoaded) {
-                                          isImageAccessible.value = true;
-                                          return child;
-                                        },
-                                        errorBuilder:
-                                            (context, error, stackTrace) {
-                                          isImageAccessible.value = false;
-                                          return Center(
-                                            child: Text(
-                                              "사진을 선택해주세요",
-                                              textAlign: TextAlign.center,
-                                              style: InjicareFont()
-                                                  .body06
-                                                  .copyWith(
-                                                    color: Colors.red,
-                                                  ),
-                                              overflow: TextOverflow.visible,
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                    ),
+                            Gaps.v20,
+                            const EventHeader(
+                              headerText: "작품명",
                             ),
-                            Gaps.v10,
-                            Text(
-                              "사진 선택하기",
-                              style: InjicareFont().body03.copyWith(
-                                    color:
-                                        InjicareColor(context: context).gray80,
+                            if (_tapSubmitPhotoEvent && _title.isEmpty)
+                              const EmptyWidget(
+                                text: "작품명을 작성해주세요",
+                              ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: IgnorePointer(
+                                    ignoring: false,
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: InjicareColor(
+                                                      context: context)
+                                                  .gray10,
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                Sizes.size20,
+                                              ),
+                                            ),
+                                            clipBehavior: Clip.hardEdge,
+                                            child: TextFormField(
+                                              // controller: _shortAnswerControllder,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  _tapSubmitPhotoEvent = false;
+                                                });
+                                                _writeTitle(value);
+                                              },
+                                              maxLines: 1,
+                                              textAlignVertical:
+                                                  TextAlignVertical.center,
+                                              style: InjicareFont().headline03,
+                                              decoration: InputDecoration(
+                                                border: InputBorder.none,
+                                                hintText: "작품 제목을 적어주세요",
+                                                hintStyle: InjicareFont()
+                                                    .headline03
+                                                    .copyWith(
+                                                      color: InjicareColor(
+                                                              context: context)
+                                                          .gray50,
+                                                    ),
+                                                contentPadding:
+                                                    const EdgeInsets.symmetric(
+                                                  horizontal: Sizes.size20,
+                                                  vertical: 10,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                            )
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                       ),
-                      Gaps.v60,
+                      const DividerWidget(),
+                      Padding(
+                        padding:
+                            const EdgeInsetsGeometry.symmetric(horizontal: 16),
+                        child: Column(
+                          children: [
+                            const EventHeader(
+                              headerText: "사진",
+                            ),
+                            if (_tapSubmitPhotoEvent && _photo == null)
+                              const EmptyWidget(
+                                text: "제출할 사진을 선택해주세요",
+                              ),
+                            GestureDetector(
+                              onTap: _selectPhoto,
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: 180,
+                                    height: 180,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      border: Border.all(
+                                        color: InjicareColor(context: context)
+                                            .gray20,
+                                        width: 5,
+                                      ),
+                                    ),
+                                    clipBehavior: Clip.hardEdge,
+                                    child: _photo == null
+                                        ? Padding(
+                                            padding: const EdgeInsets.all(50),
+                                            child: ColorFiltered(
+                                              colorFilter: ColorFilter.mode(
+                                                InjicareColor(context: context)
+                                                    .gray40,
+                                                BlendMode.srcIn,
+                                              ),
+                                              child: SvgPicture.asset(
+                                                "assets/svg/photo.svg",
+                                                width: 28,
+                                              ),
+                                            ),
+                                          )
+                                        : Container(
+                                            width: 180,
+                                            height: 180,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                            ),
+                                            clipBehavior: Clip.hardEdge,
+                                            child: Image.network(
+                                              _photo!.path,
+                                              fit: BoxFit.cover,
+                                              frameBuilder: (context,
+                                                  child,
+                                                  frame,
+                                                  wasSynchronouslyLoaded) {
+                                                isImageAccessible.value = true;
+                                                return child;
+                                              },
+                                              errorBuilder:
+                                                  (context, error, stackTrace) {
+                                                isImageAccessible.value = false;
+                                                return Center(
+                                                  child: Text(
+                                                    "사진을 선택해주세요",
+                                                    textAlign: TextAlign.center,
+                                                    style: InjicareFont()
+                                                        .body06
+                                                        .copyWith(
+                                                          color: Colors.red,
+                                                        ),
+                                                    overflow:
+                                                        TextOverflow.visible,
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                  ),
+                                  Gaps.v10,
+                                  Text(
+                                    "사진 선택하기",
+                                    style: InjicareFont().body03.copyWith(
+                                          color: InjicareColor(context: context)
+                                              .gray80,
+                                        ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            Gaps.v60,
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 ),
@@ -513,35 +539,33 @@ class _SelectPhotoWidgetState extends State<SelectPhotoWidget> {
                       if (submitPhotoEventValue) return;
                       widget.submitPhotoEvent();
                     },
-                    child: Container(
-                      height: 55,
-                      decoration: BoxDecoration(
-                        color: InjicareColor(context: context).primary50,
-                        borderRadius: BorderRadius.circular(
-                          Sizes.size5,
+                    child: Padding(
+                      padding:
+                          const EdgeInsetsGeometry.symmetric(horizontal: 16),
+                      child: Container(
+                        height: 55,
+                        decoration: BoxDecoration(
+                          color: InjicareColor(context: context).primary50,
+                          borderRadius: BorderRadius.circular(18),
                         ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2,
-                        ),
-                      ),
-                      child: Center(
-                        child: submitPhotoEventValue
-                            ? const SizedBox(
-                                width: 15,
-                                height: 15,
-                                child: CircularProgressIndicator.adaptive(
-                                  valueColor: AlwaysStoppedAnimation(
-                                    Colors.white,
-                                  ),
-                                ),
-                              )
-                            : Text(
-                                "사진전에 제출하기",
-                                style: InjicareFont().body01.copyWith(
-                                      color: Colors.white,
+                        child: Center(
+                          child: submitPhotoEventValue
+                              ? const SizedBox(
+                                  width: 15,
+                                  height: 15,
+                                  child: CircularProgressIndicator.adaptive(
+                                    valueColor: AlwaysStoppedAnimation(
+                                      Colors.white,
                                     ),
-                              ),
+                                  ),
+                                )
+                              : Text(
+                                  "사진전에 제출하기",
+                                  style: InjicareFont().body01.copyWith(
+                                        color: Colors.white,
+                                      ),
+                                ),
+                        ),
                       ),
                     ),
                   );

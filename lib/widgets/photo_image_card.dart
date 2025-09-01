@@ -7,6 +7,7 @@ import 'package:injicare_event/injicare_color.dart';
 import 'package:injicare_event/injicare_font.dart';
 import 'package:injicare_event/models/photo_image_model.dart';
 import 'package:injicare_event/utils.dart';
+import 'package:injicare_event/widgets/enlarge_photo_card.dart';
 
 class PhotoImageCard extends StatelessWidget {
   final int index;
@@ -77,23 +78,61 @@ class PhotoImageCard extends StatelessWidget {
                   ),
                   Expanded(
                     flex: 5,
-                    child: Container(
-                      height: 80,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      clipBehavior: Clip.hardEdge,
-                      child: CachedNetworkImage(
-                        imageUrl: photoImageModel.photo,
-                        placeholder: (context, url) {
-                          return const SkeletonAvatar(
-                            style: SkeletonAvatarStyle(
-                              width: 80,
-                              height: 80,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          PageRouteBuilder(
+                            opaque: false, // ✨ 핵심: 뒤 화면을 계속 그리게 함
+                            barrierDismissible: true,
+                            barrierColor:
+                                Colors.black.withValues(alpha: 0.6), // 딤 색상
+                            transitionDuration:
+                                const Duration(milliseconds: 200),
+                            pageBuilder: (context, animation, secondary) =>
+                                EnlargePhotoCard(
+                              url: photoImageModel.photo,
+                              heroTag: photoImageModel.photo,
                             ),
-                          );
-                        },
-                        fit: BoxFit.fill,
+                            transitionsBuilder:
+                                (context, animation, secondary, child) {
+                              return FadeTransition(
+                                  opacity: animation, child: child);
+                            },
+                          ),
+                        );
+                      },
+                      child: Container(
+                        height: 80,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        clipBehavior: Clip.hardEdge,
+                        child: CachedNetworkImage(
+                          imageUrl: photoImageModel.photo,
+                          placeholder: (context, url) {
+                            return const SkeletonAvatar(
+                              style: SkeletonAvatarStyle(
+                                width: 80,
+                                height: 80,
+                              ),
+                            );
+                          },
+                          errorWidget: (context, url, error) {
+                            return Container(
+                              color: InjicareColor(context: context).gray40,
+                              child: Center(
+                                child: Text(
+                                  "불러올 수 없는\n이미지입니다",
+                                  style: InjicareFont().label03.copyWith(
+                                        color: InjicareColor(context: context)
+                                            .gray10,
+                                      ),
+                                ),
+                              ),
+                            );
+                          },
+                          fit: BoxFit.fill,
+                        ),
                       ),
                     ),
                   ),
