@@ -139,32 +139,37 @@ class _EventDetailPointScreenState
             widget.userProfile.userId,
           );
 
+      // 업로드 실패 방어막
       if (photoUrl.isEmpty) {
+        submitPhotoEvent.value = false;
         if (!mounted) return;
-        showWarningSnackBar(context, "오류가 발생했습니다. 다시 시도해주세요");
+        showWarningSnackBar(context, '사진 업로드에 실패했습니다. 다시 시도해 주세요.');
+
+        if (!mounted) return;
+        Navigator.of(context).pop();
         return;
+      } else {
+        final photoImageModel = PhotoImageModel(
+          eventId: stateEventModel.eventId,
+          userId: widget.userProfile.userId,
+          createdAt: getCurrentSeconds(),
+          photo: photoUrl,
+          title: _title,
+        );
+
+        await ref.read(eventRepo).savePhotoEventAnswer(photoImageModel);
+
+        setState(() {
+          _imagesList.insert(0, photoImageModel);
+          stateEventModel = participantUpdateEventModel;
+          _myParticipation = true;
+        });
+
+        if (!mounted) return;
+        Navigator.of(context).pop();
+
+        _scrollToLastParticipantBottom();
       }
-
-      final photoImageModel = PhotoImageModel(
-        eventId: stateEventModel.eventId,
-        userId: widget.userProfile.userId,
-        createdAt: getCurrentSeconds(),
-        photo: photoUrl,
-        title: _title,
-      );
-
-      await ref.read(eventRepo).savePhotoEventAnswer(photoImageModel);
-
-      setState(() {
-        _imagesList.insert(0, photoImageModel);
-        stateEventModel = participantUpdateEventModel;
-        _myParticipation = true;
-      });
-
-      if (!mounted) return;
-      Navigator.of(context).pop();
-
-      _scrollToLastParticipantBottom();
     } catch (e) {
       submitPhotoEvent.value = false;
       // ignore: avoid_print

@@ -510,6 +510,11 @@ class EventRepository {
       final fileUrl =
           _supabase.storage.from("photo_events").getPublicUrl(fileStoragePath);
 
+      if (fileUrl.isEmpty) {
+// Common causes: bucket not public, wrong path, RLS/policy blocks, etc.
+        throw Exception('Public URL is empty. Check bucket policy & path.');
+      }
+
       return fileUrl;
     } catch (e) {
       // ignore: avoid_print

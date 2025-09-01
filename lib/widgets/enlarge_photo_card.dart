@@ -22,7 +22,7 @@ class EnlargePhotoCard extends StatelessWidget {
       data: MediaQuery.of(context)
           .copyWith(textScaler: const TextScaler.linear(1.0)),
       child: Scaffold(
-        backgroundColor: Colors.black.withValues(alpha: 0.6),
+        backgroundColor: Colors.black.withOpacity(0.6),
         appBar: AppBar(
           centerTitle: true,
           elevation: 0,
