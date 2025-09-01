@@ -84,8 +84,7 @@ class PhotoImageCard extends StatelessWidget {
                           PageRouteBuilder(
                             opaque: false, // ✨ 핵심: 뒤 화면을 계속 그리게 함
                             barrierDismissible: true,
-                            barrierColor:
-                                Colors.black.withValues(alpha: 0.6), // 딤 색상
+                            barrierColor: Colors.black.withOpacity(0.6), // 딤 색상
                             transitionDuration:
                                 const Duration(milliseconds: 200),
                             pageBuilder: (context, animation, secondary) =>

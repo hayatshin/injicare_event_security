@@ -139,6 +139,12 @@ class _EventDetailPointScreenState
             widget.userProfile.userId,
           );
 
+      if (photoUrl.isEmpty) {
+        if (!mounted) return;
+        showWarningSnackBar(context, "오류가 발생했습니다. 다시 시도해주세요");
+        return;
+      }
+
       final photoImageModel = PhotoImageModel(
         eventId: stateEventModel.eventId,
         userId: widget.userProfile.userId,
@@ -334,7 +340,7 @@ class _SelectPhotoWidgetState extends State<SelectPhotoWidget> {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsetsGeometry.symmetric(horizontal: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Row(
                   children: [
                     Flexible(
@@ -355,8 +361,7 @@ class _SelectPhotoWidgetState extends State<SelectPhotoWidget> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Padding(
-                        padding:
-                            const EdgeInsetsGeometry.symmetric(horizontal: 16),
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Column(
                           children: [
                             Gaps.v20,
@@ -429,8 +434,7 @@ class _SelectPhotoWidgetState extends State<SelectPhotoWidget> {
                       ),
                       const DividerWidget(),
                       Padding(
-                        padding:
-                            const EdgeInsetsGeometry.symmetric(horizontal: 16),
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Column(
                           children: [
                             const EventHeader(
@@ -540,8 +544,7 @@ class _SelectPhotoWidgetState extends State<SelectPhotoWidget> {
                       widget.submitPhotoEvent();
                     },
                     child: Padding(
-                      padding:
-                          const EdgeInsetsGeometry.symmetric(horizontal: 16),
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Container(
                         height: 55,
                         decoration: BoxDecoration(
