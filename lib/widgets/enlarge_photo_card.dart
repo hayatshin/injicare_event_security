@@ -25,32 +25,32 @@ class EnlargePhotoCard extends StatelessWidget {
           Navigator.of(context).pop();
         },
         child: Scaffold(
-          // backgroundColor: Colors.white.withOpacity(0.5),
-          // appBar: AppBar(
-          //   centerTitle: true,
-          //   elevation: 0,
-          //   forceMaterialTransparency: true,
-          //   // automaticallyImplyLeading: false,
-          //   // leading: GestureDetector(
-          //   //   onTap: () {
-          //   //     Navigator.of(context).pop();
-          //   //   },
-          //   //   child: Center(
-          //   //     child: SvgPicture.asset(
-          //   //       "assets/svg/arrow-left.svg",
-          //   //       width: 18,
-          //   //       colorFilter:
-          //   //           const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-          //   //     ),
-          //   //   ),
-          //   // ),
-          //   title: Text(
-          //     "출품작 크게 보기",
-          //     style: InjicareFont().body01.copyWith(
-          //           color: Colors.white,
-          //         ),
-          //   ),
-          // ),
+          backgroundColor: Colors.white.withOpacity(0.5),
+          appBar: AppBar(
+            centerTitle: true,
+            elevation: 0,
+            forceMaterialTransparency: true,
+            // automaticallyImplyLeading: false,
+            // leading: GestureDetector(
+            //   onTap: () {
+            //     Navigator.of(context).pop();
+            //   },
+            //   child: Center(
+            //     child: SvgPicture.asset(
+            //       "assets/svg/arrow-left.svg",
+            //       width: 18,
+            //       colorFilter:
+            //           const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+            //     ),
+            //   ),
+            // ),
+            title: Text(
+              "출품작 크게 보기",
+              style: InjicareFont().body01.copyWith(
+                    color: Colors.white,
+                  ),
+            ),
+          ),
           body: InteractiveViewer(
             panEnabled: false,
             minScale: 0.5,
