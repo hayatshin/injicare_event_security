@@ -25,7 +25,7 @@ class EnlargePhotoCard extends StatelessWidget {
           Navigator.of(context).pop();
         },
         child: Scaffold(
-          backgroundColor: Colors.white.withOpacity(0.5),
+          backgroundColor: Colors.black.withOpacity(0.6),
           appBar: AppBar(
             centerTitle: true,
             elevation: 0,
