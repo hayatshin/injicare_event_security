@@ -137,6 +137,7 @@ class EventViewModel extends AsyncNotifier<void> {
       // ignore: avoid_print
       print("updateUserScore -> $e");
     }
+
     return eventModel;
   }
 

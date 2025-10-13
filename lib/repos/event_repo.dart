@@ -18,11 +18,11 @@ class EventRepository {
   //     "https://diejlcrtffmlsdyvcagq.supabase.co/functions/v1/event-user-point-functions-2");
 
   static final eventUserTargetScoreFunctions = Uri.parse(
-      "https://diejlcrtffmlsdyvcagq.supabase.co/functions/v1/event-user-targetscore-functions-4");
+      "https://diejlcrtffmlsdyvcagq.supabase.co/functions/v1/event-user-targetscore-functions-5");
   static final eventUserMultipleScoresFunctions = Uri.parse(
-      "https://diejlcrtffmlsdyvcagq.supabase.co/functions/v1/event-user-multiplescores-functions-4");
+      "https://diejlcrtffmlsdyvcagq.supabase.co/functions/v1/event-user-multiplescores-functions-5");
   static final eventUserCountFunctions = Uri.parse(
-      "https://diejlcrtffmlsdyvcagq.supabase.co/functions/v1/event-user-count-functions-4");
+      "https://diejlcrtffmlsdyvcagq.supabase.co/functions/v1/event-user-count-functions-5");
 
   Future<Map<String, dynamic>> getEventUserTargetScore(
     int startSeconds,
@@ -138,7 +138,6 @@ class EventRepository {
     String userId,
     String invitationType,
   ) async {
-    print("invitationType: $invitationType");
     Map<String, dynamic> requestBody = {
       'userId': userId,
       'startSeconds': startSeconds,
@@ -163,7 +162,6 @@ class EventRepository {
 
     if (response.statusCode == 200) {
       final data = jsonDecode(utf8.decode(response.bodyBytes));
-      print("data: ${data["data"]}");
 
       return data["data"];
     }
@@ -298,7 +296,11 @@ class EventRepository {
         "userId": userId,
         "createdAt": getCurrentSeconds(),
       };
-      await _supabase.from("event_participants").insert(participation);
+      await _supabase.from("event_participants").upsert(
+            participation,
+            onConflict: 'eventId,userId',
+            ignoreDuplicates: true,
+          );
     }
   }
 
