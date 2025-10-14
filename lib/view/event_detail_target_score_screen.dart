@@ -172,7 +172,7 @@ class _EventDetailPointScreenState
                   : !stateEventModel.userAchieveOrNot!
                       ? !_myParticipation
                           ? "참여하기"
-                          : "참여 중입니다"
+                          : "참여 완료"
                       : _myApplyForGift
                           ? "선물 신청 완료"
                           : "선물 받기",

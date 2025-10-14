@@ -124,7 +124,7 @@ class _EventDetailPointScreenState
                   ? "종료된 행사입니다"
                   : !_myParticipation
                       ? "참여하기"
-                      : "참여 중입니다",
+                      : "참여 완료",
             ),
       userPointWidget: _myParticipationLoadingComplete
           ? Column(
