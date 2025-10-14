@@ -18,11 +18,11 @@ class EventRepository {
   //     "https://diejlcrtffmlsdyvcagq.supabase.co/functions/v1/event-user-point-functions-2");
 
   static final eventUserTargetScoreFunctions = Uri.parse(
-      "https://diejlcrtffmlsdyvcagq.supabase.co/functions/v1/event-user-targetscore-functions-5");
+      "https://diejlcrtffmlsdyvcagq.supabase.co/functions/v1/event-user-targetscore-functions-4");
   static final eventUserMultipleScoresFunctions = Uri.parse(
-      "https://diejlcrtffmlsdyvcagq.supabase.co/functions/v1/event-user-multiplescores-functions-5");
+      "https://diejlcrtffmlsdyvcagq.supabase.co/functions/v1/event-user-multiplescores-functions-4");
   static final eventUserCountFunctions = Uri.parse(
-      "https://diejlcrtffmlsdyvcagq.supabase.co/functions/v1/event-user-count-functions-5");
+      "https://diejlcrtffmlsdyvcagq.supabase.co/functions/v1/event-user-count-functions-4");
 
   Future<Map<String, dynamic>> getEventUserTargetScore(
     int startSeconds,
@@ -59,6 +59,7 @@ class EventRepository {
       'invitationType': invitationType,
     };
     String requestBodyJson = jsonEncode(requestBody);
+    print("requestBodyJson: $requestBodyJson");
 
     final response = await http.post(
       eventUserTargetScoreFunctions,
@@ -66,8 +67,12 @@ class EventRepository {
       headers: headers,
     );
 
+    print("response: $response");
+
     if (response.statusCode == 200) {
       final data = jsonDecode(utf8.decode(response.bodyBytes));
+      print("response -> data: ${data["data"]}");
+
       return data["data"];
     }
 
