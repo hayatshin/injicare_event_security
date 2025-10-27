@@ -1,3 +1,6 @@
+import 'dart:js_interop'; // JSAny / JSObject / JSString
+import 'dart:js_interop_unsafe';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -5,6 +8,17 @@ import 'package:injicare_event/constants/sizes.dart';
 import 'package:injicare_event/injicare_color.dart';
 import 'package:injicare_event/router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:web/web.dart' as web; // Window, Document 등
+
+Future<String?> readInjectedToken() async {
+  // window.__INJICARE_ID_TOKEN__
+  final JSAny? tokenJs =
+      (web.window as JSObject).getProperty('__INJICARE_ID_TOKEN__'.toJS);
+
+  // JS → Dart
+  final String? token = (tokenJs as JSString?)?.toDart;
+  return token;
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,6 +30,7 @@ void main() async {
   await Supabase.initialize(
     url: supabaseUrlDebug!,
     anonKey: supabaseAnonKeyDebug!,
+    accessToken: readInjectedToken, // ← 여기!
   );
 
   runApp(

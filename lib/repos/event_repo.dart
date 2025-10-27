@@ -20,7 +20,7 @@ class EventRepository {
   static final eventUserTargetScoreFunctions = Uri.parse(
       "https://diejlcrtffmlsdyvcagq.supabase.co/functions/v1/event-user-targetscore-functions-4");
   static final eventUserMultipleScoresFunctions = Uri.parse(
-      "https://diejlcrtffmlsdyvcagq.supabase.co/functions/v1/event-user-multiplescores-functions-4");
+      "https://diejlcrtffmlsdyvcagq.supabase.co/functions/v1/event-user-multiplescores-functions-5");
   static final eventUserCountFunctions = Uri.parse(
       "https://diejlcrtffmlsdyvcagq.supabase.co/functions/v1/event-user-count-functions-4");
 
@@ -59,7 +59,7 @@ class EventRepository {
       'invitationType': invitationType,
     };
     String requestBodyJson = jsonEncode(requestBody);
-    print("requestBodyJson: $requestBodyJson");
+    final headers = await tokenHeaders();
 
     final response = await http.post(
       eventUserTargetScoreFunctions,
@@ -67,11 +67,8 @@ class EventRepository {
       headers: headers,
     );
 
-    print("response: $response");
-
     if (response.statusCode == 200) {
       final data = jsonDecode(utf8.decode(response.bodyBytes));
-      print("response -> data: ${data["data"]}");
 
       return data["data"];
     }
@@ -114,12 +111,16 @@ class EventRepository {
       'invitationType': invitationType,
     };
     String requestBodyJson = jsonEncode(requestBody);
+    final headers = await tokenHeaders();
 
     final response = await http.post(
       eventUserMultipleScoresFunctions,
       body: requestBodyJson,
       headers: headers,
     );
+
+    print("response - statusCode: ${response.statusCode}");
+    print("response: $response");
 
     if (response.statusCode == 200) {
       final data = jsonDecode(utf8.decode(response.bodyBytes));
@@ -158,6 +159,7 @@ class EventRepository {
       'invitationType': invitationType,
     };
     String requestBodyJson = jsonEncode(requestBody);
+    final headers = await tokenHeaders();
 
     final response = await http.post(
       eventUserCountFunctions,

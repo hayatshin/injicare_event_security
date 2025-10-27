@@ -15,6 +15,10 @@
     the `--base-href` argument provided to `flutter build`.
   -->
     <base href="$FLUTTER_BASE_HREF" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
 
     <meta charset="UTF-8" />
     <meta content="IE=Edge" http-equiv="X-UA-Compatible" />
@@ -60,6 +64,31 @@
         var data = JSON.parse(jsonString);
         console.log(data);
       }
+    </script>
+
+    <script>
+      // 현재 Firebase ID 토큰을 보관할 전역 변수
+      window.__INJICARE_ID_TOKEN__ = null;
+
+      // A(모바일 앱)에서 호출해 줄 함수: 토큰 수신
+      window.receiveFirebaseIdToken = function (token) {
+        window.__INJICARE_ID_TOKEN__ = token;
+
+        // 선택) Flutter 쪽에 "토큰 들어왔음" 이벤트를 쏴줍니다.
+        if (window.dispatchEvent) {
+          window.dispatchEvent(
+            new CustomEvent("injicare-token", { detail: { token } })
+          );
+        }
+      };
+
+      // 선택) 로그아웃/토큰 제거용 (원하면 사용)
+      window.clearFirebaseIdToken = function () {
+        window.__INJICARE_ID_TOKEN__ = null;
+        if (window.dispatchEvent) {
+          window.dispatchEvent(new Event("injicare-token-cleared"));
+        }
+      };
     </script>
   </body>
 </html>
