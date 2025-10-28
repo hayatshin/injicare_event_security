@@ -1,15 +1,15 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:injicare_event/models/contract_region_model.dart';
-import 'package:injicare_event/models/event_model.dart';
-import 'package:injicare_event/models/photo_image_model.dart';
-import 'package:injicare_event/models/quiz_answer_model.dart';
-import 'package:injicare_event/models/user_profile.dart';
-import 'package:injicare_event/repos/authentication_repo.dart';
-import 'package:injicare_event/repos/event_repo.dart';
-import 'package:injicare_event/repos/region_repo.dart';
-import 'package:injicare_event/utils.dart';
+import 'package:injicare_event_security/models/contract_region_model.dart';
+import 'package:injicare_event_security/models/event_model.dart';
+import 'package:injicare_event_security/models/photo_image_model.dart';
+import 'package:injicare_event_security/models/quiz_answer_model.dart';
+import 'package:injicare_event_security/models/user_profile.dart';
+import 'package:injicare_event_security/repos/authentication_repo.dart';
+import 'package:injicare_event_security/repos/event_repo.dart';
+import 'package:injicare_event_security/repos/region_repo.dart';
+import 'package:injicare_event_security/utils.dart';
 
 class EventViewModel extends AsyncNotifier<void> {
   late EventRepository _eventRepo;

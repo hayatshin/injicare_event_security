@@ -1,7 +1,7 @@
 import 'package:go_router/go_router.dart';
-import 'package:injicare_event/view/error_screen.dart';
-import 'package:injicare_event/view/home.dart';
-import 'package:injicare_event/view/navigator_screen.dart';
+import 'package:injicare_event_security/view/error_screen.dart';
+import 'package:injicare_event_security/view/home.dart';
+import 'package:injicare_event_security/view/navigator_screen.dart';
 
 final router = GoRouter(
   initialLocation: "/",

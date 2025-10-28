@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:injicare_event/models/event_model.dart';
+import 'package:injicare_event_security/models/event_model.dart';
 
 class CircleProgressWidget extends ConsumerStatefulWidget {
   final EventModel eventModel;

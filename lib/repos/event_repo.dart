@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
-import 'package:injicare_event/constants/http.dart';
-import 'package:injicare_event/models/photo_image_model.dart';
-import 'package:injicare_event/models/quiz_answer_model.dart';
-import 'package:injicare_event/utils.dart';
+import 'package:injicare_event_security/constants/http.dart';
+import 'package:injicare_event_security/models/photo_image_model.dart';
+import 'package:injicare_event_security/models/quiz_answer_model.dart';
+import 'package:injicare_event_security/utils.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';
 

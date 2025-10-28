@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:injicare_event/models/event_model.dart';
-import 'package:injicare_event/models/user_profile.dart';
-import 'package:injicare_event/view/default_screen.dart';
-import 'package:injicare_event/view/error_screen.dart';
-import 'package:injicare_event/view/event_detail_count_screen.dart';
-import 'package:injicare_event/view/event_detail_multiple_scores_screen.dart';
-import 'package:injicare_event/view/event_detail_photo_screen.dart';
-import 'package:injicare_event/view/event_detail_quiz_screen.dart';
-import 'package:injicare_event/view/event_detail_target_score_screen.dart';
-import 'package:injicare_event/view_models/event_view_model.dart';
-import 'package:injicare_event/view_models/user_provider.dart';
+import 'package:injicare_event_security/models/event_model.dart';
+import 'package:injicare_event_security/models/user_profile.dart';
+import 'package:injicare_event_security/view/default_screen.dart';
+import 'package:injicare_event_security/view/error_screen.dart';
+import 'package:injicare_event_security/view/event_detail_count_screen.dart';
+import 'package:injicare_event_security/view/event_detail_multiple_scores_screen.dart';
+import 'package:injicare_event_security/view/event_detail_photo_screen.dart';
+import 'package:injicare_event_security/view/event_detail_quiz_screen.dart';
+import 'package:injicare_event_security/view/event_detail_target_score_screen.dart';
+import 'package:injicare_event_security/view_models/event_view_model.dart';
+import 'package:injicare_event_security/view_models/user_provider.dart';
 
 class NavigatorScreen extends ConsumerStatefulWidget {
   final String eventId;

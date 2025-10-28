@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:injicare_event/utils.dart';
+import 'package:injicare_event_security/utils.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide User;
 
 class AuthenticationRepository {

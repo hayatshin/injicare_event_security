@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:injicare_event/constants/gaps.dart';
-import 'package:injicare_event/injicare_color.dart';
-import 'package:injicare_event/injicare_font.dart';
-import 'package:injicare_event/models/event_model.dart';
+import 'package:injicare_event_security/constants/gaps.dart';
+import 'package:injicare_event_security/injicare_color.dart';
+import 'package:injicare_event_security/injicare_font.dart';
+import 'package:injicare_event_security/models/event_model.dart';
 
 class UserPointLoadingWidget extends StatefulWidget {
   final Size size;

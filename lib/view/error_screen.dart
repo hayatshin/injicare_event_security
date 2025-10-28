@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_skeleton_ui/flutter_skeleton_ui.dart';
-import 'package:injicare_event/injicare_font.dart';
+import 'package:injicare_event_security/injicare_font.dart';
 
 class ErrorScreen extends StatelessWidget {
   const ErrorScreen({super.key});

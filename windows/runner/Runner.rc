@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "injicare_event" "\0"
+            VALUE "FileDescription", "injicare_event_security" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "injicare_event" "\0"
+            VALUE "InternalName", "injicare_event_security" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2024 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "injicare_event.exe" "\0"
-            VALUE "ProductName", "injicare_event" "\0"
+            VALUE "OriginalFilename", "injicare_event_security.exe" "\0"
+            VALUE "ProductName", "injicare_event_security" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

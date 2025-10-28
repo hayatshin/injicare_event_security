@@ -1,4 +1,4 @@
-# injicare_event
+# injicare_event_security
 
 A new Flutter project.
 

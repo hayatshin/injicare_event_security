@@ -1,4 +1,4 @@
-import 'package:injicare_event/utils.dart';
+import 'package:injicare_event_security/utils.dart';
 
 class UserProfile {
   final String userId;

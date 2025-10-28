@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:injicare_event/view/default_screen.dart';
+import 'package:injicare_event_security/view/default_screen.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});

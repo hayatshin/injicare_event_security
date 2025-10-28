@@ -1,4 +1,4 @@
-import 'package:injicare_event/main.dart';
+import 'package:injicare_event_security/main.dart';
 
 Map<String, String> headers2 = {
   'Content-Type': 'text/plain',

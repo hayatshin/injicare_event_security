@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_skeleton_ui/flutter_skeleton_ui.dart';
-import 'package:injicare_event/constants/gaps.dart';
-import 'package:injicare_event/constants/sizes.dart';
+import 'package:injicare_event_security/constants/gaps.dart';
+import 'package:injicare_event_security/constants/sizes.dart';
 
 class DefaultScreen extends StatelessWidget {
   const DefaultScreen({super.key});

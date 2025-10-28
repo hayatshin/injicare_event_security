@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:injicare_event/constants/gaps.dart';
-import 'package:injicare_event/injicare_color.dart';
-import 'package:injicare_event/injicare_font.dart';
+import 'package:injicare_event_security/constants/gaps.dart';
+import 'package:injicare_event_security/injicare_color.dart';
+import 'package:injicare_event_security/injicare_font.dart';
 
 class EnlargePhotoCard extends StatelessWidget {
   final String url;

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_skeleton_ui/flutter_skeleton_ui.dart';
-import 'package:injicare_event/constants/gaps.dart';
-import 'package:injicare_event/constants/sizes.dart';
-import 'package:injicare_event/injicare_color.dart';
-import 'package:injicare_event/injicare_font.dart';
-import 'package:injicare_event/models/event_model.dart';
-import 'package:injicare_event/repos/event_repo.dart';
-import 'package:injicare_event/widgets/desc_tile_widgets.dart';
+import 'package:injicare_event_security/constants/gaps.dart';
+import 'package:injicare_event_security/constants/sizes.dart';
+import 'package:injicare_event_security/injicare_color.dart';
+import 'package:injicare_event_security/injicare_font.dart';
+import 'package:injicare_event_security/models/event_model.dart';
+import 'package:injicare_event_security/repos/event_repo.dart';
+import 'package:injicare_event_security/widgets/desc_tile_widgets.dart';
 
 class EventDetailTemplate extends ConsumerWidget {
   final bool completeScoreLoading;

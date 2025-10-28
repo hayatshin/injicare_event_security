@@ -20,5 +20,5 @@ jobs:
 
       - uses: bluefireteam/flutter-gh-pages@v7
         with:
-          baseHref: /injicare_event/
+          baseHref: /injicare_event_security/
     

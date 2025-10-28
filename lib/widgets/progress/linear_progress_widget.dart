@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:injicare_event/injicare_color.dart';
+import 'package:injicare_event_security/injicare_color.dart';
 
 class LinearProgressWidget extends ConsumerStatefulWidget {
   // final EventModel eventModel;

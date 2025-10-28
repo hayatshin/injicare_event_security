@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:injicare_event/constants/gaps.dart';
-import 'package:injicare_event/constants/sizes.dart';
-import 'package:injicare_event/injicare_color.dart';
-import 'package:injicare_event/injicare_font.dart';
-import 'package:injicare_event/models/quiz_answer_model.dart';
-import 'package:injicare_event/utils.dart';
+import 'package:injicare_event_security/constants/gaps.dart';
+import 'package:injicare_event_security/constants/sizes.dart';
+import 'package:injicare_event_security/injicare_color.dart';
+import 'package:injicare_event_security/injicare_font.dart';
+import 'package:injicare_event_security/models/quiz_answer_model.dart';
+import 'package:injicare_event_security/utils.dart';
 
 class AnswerCard extends StatelessWidget {
   final int index;

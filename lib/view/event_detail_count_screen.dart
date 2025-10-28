@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:injicare_event/constants/gaps.dart';
-import 'package:injicare_event/constants/sizes.dart';
-import 'package:injicare_event/injicare_color.dart';
-import 'package:injicare_event/injicare_font.dart';
-import 'package:injicare_event/models/event_model.dart';
-import 'package:injicare_event/models/user_profile.dart';
-import 'package:injicare_event/repos/event_repo.dart';
-import 'package:injicare_event/utils.dart';
-import 'package:injicare_event/view_models/event_view_model.dart';
-import 'package:injicare_event/widgets/button_widgets.dart';
-import 'package:injicare_event/widgets/desc_tile_widgets.dart';
-import 'package:injicare_event/widgets/event_detail_template.dart';
-import 'package:injicare_event/widgets/progress/linear_progress_widget.dart';
+import 'package:injicare_event_security/constants/gaps.dart';
+import 'package:injicare_event_security/constants/sizes.dart';
+import 'package:injicare_event_security/injicare_color.dart';
+import 'package:injicare_event_security/injicare_font.dart';
+import 'package:injicare_event_security/models/event_model.dart';
+import 'package:injicare_event_security/models/user_profile.dart';
+import 'package:injicare_event_security/repos/event_repo.dart';
+import 'package:injicare_event_security/utils.dart';
+import 'package:injicare_event_security/view_models/event_view_model.dart';
+import 'package:injicare_event_security/widgets/button_widgets.dart';
+import 'package:injicare_event_security/widgets/desc_tile_widgets.dart';
+import 'package:injicare_event_security/widgets/event_detail_template.dart';
+import 'package:injicare_event_security/widgets/progress/linear_progress_widget.dart';
 
 class EventDetailCountScreen extends ConsumerStatefulWidget {
   final EventModel eventModel;

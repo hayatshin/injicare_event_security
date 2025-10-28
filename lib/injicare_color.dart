@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:injicare_event/utils.dart';
+import 'package:injicare_event_security/utils.dart';
 
 class InjicareColor {
   final BuildContext? context;

@@ -4,9 +4,9 @@ import 'dart:js_interop_unsafe';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:injicare_event/constants/sizes.dart';
-import 'package:injicare_event/injicare_color.dart';
-import 'package:injicare_event/router.dart';
+import 'package:injicare_event_security/constants/sizes.dart';
+import 'package:injicare_event_security/injicare_color.dart';
+import 'package:injicare_event_security/router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:web/web.dart' as web; // Window, Document 등
 
