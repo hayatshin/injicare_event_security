@@ -6,8 +6,10 @@ Map<String, String> headers2 = {
 
 Future<Map<String, String>> tokenHeaders() async {
   final token = await readInjectedToken(); // 위 함수 재사용
-  return {
-    'Content-Type': 'text/plain',
-    if (token != null) 'Authorization': 'Bearer $token', // ★
+  final Map<String, String> headers = {
+    'Content-Type': 'application/json; charset=utf-8',
+    'Accept': 'application/json',
+    'Authorization': 'Bearer $token'
   };
+  return headers;
 }

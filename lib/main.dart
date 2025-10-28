@@ -30,7 +30,7 @@ void main() async {
   await Supabase.initialize(
     url: supabaseUrlDebug!,
     anonKey: supabaseAnonKeyDebug!,
-    // accessToken: readInjectedToken, // ← 여기!
+    accessToken: readInjectedToken, // ← 여기!
   );
 
   runApp(

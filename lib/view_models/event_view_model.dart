@@ -122,11 +122,6 @@ class EventViewModel extends AsyncNotifier<void> {
           eventModel.invitationType,
         );
 
-        print("userStartSeconds: $userStartSeconds");
-
-        print("data: ${eventModel.diaryCount}");
-        print("data: ${data["userDiaryCount"]}");
-
         final scorePointModel = eventModel.copyWith(
           userInvitationCount: data["userInvitationCount"],
           userDiaryCount: data["userDiaryCount"],
