@@ -3,22 +3,14 @@ name: gh-pages
 on:
   push:
     branches: [main]
-
 jobs:
   build:
     runs-on: macos-latest
-
     steps:
-      - uses: actions/checkout@v3
-
-      - uses: subosito/flutter-action@v2
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v1
         with:
           flutter-version: "3.22.2"
-
-      - name: Clean and Get Packages
-        run: |
-          flutter clean
-          flutter pub get
 
       - name: Generate env file
         run: |
@@ -26,11 +18,7 @@ jobs:
           echo "SUPABASE_ANONKEY=${{ secrets.SUPABASE_ANONKEY }}" >> env
           echo "SUPABASE_URL=${{ secrets.SUPABASE_URL }}" >> env
 
-      - name: Build Flutter Web
-        run: flutter build web --release --base-href "/injicare_event_security/"
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - uses: bluefireteam/flutter-gh-pages@v7
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build/web
+          baseHref: /injicare_event_security/
+    
