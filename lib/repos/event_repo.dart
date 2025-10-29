@@ -140,33 +140,39 @@ class EventRepository {
     String userId,
     String invitationType,
   ) async {
-    Map<String, dynamic> requestBody = {
-      'userId': userId,
-      'startSeconds': startSeconds,
-      'endSeconds': endSeconds,
-      'invitationCount': invitationCount,
-      'diaryCount': diaryCount,
-      'commentCount': commentCount,
-      'likeCount': likeCount,
-      'quizCount': quizCount,
-      'maxCommentCount': maxCommentCount,
-      'maxLikeCount': maxLikeCount,
-      'maxInvitationCount': maxInvitationCount,
-      'invitationType': invitationType,
-    };
-    String requestBodyJson = jsonEncode(requestBody);
-    final headers = await tokenHeaders();
+    try {
+      Map<String, dynamic> requestBody = {
+        'userId': userId,
+        'startSeconds': startSeconds,
+        'endSeconds': endSeconds,
+        'invitationCount': invitationCount,
+        'diaryCount': diaryCount,
+        'commentCount': commentCount,
+        'likeCount': likeCount,
+        'quizCount': quizCount,
+        'maxCommentCount': maxCommentCount,
+        'maxLikeCount': maxLikeCount,
+        'maxInvitationCount': maxInvitationCount,
+        'invitationType': invitationType,
+      };
+      String requestBodyJson = jsonEncode(requestBody);
+      final headers = await tokenHeaders();
+      // print("headers: $headers");
 
-    final response = await http.post(
-      eventUserCountFunctions,
-      body: requestBodyJson,
-      headers: headers,
-    );
+      final response = await http.post(
+        eventUserCountFunctions,
+        body: requestBodyJson,
+        headers: headers,
+      );
 
-    if (response.statusCode == 200) {
-      final data = jsonDecode(utf8.decode(response.bodyBytes));
+      if (response.statusCode == 200) {
+        final data = jsonDecode(utf8.decode(response.bodyBytes));
 
-      return data["data"];
+        return data["data"];
+      }
+    } catch (e) {
+      // ignore: avoid_print
+      print("getEventUserCount error: $e");
     }
 
     return {};
