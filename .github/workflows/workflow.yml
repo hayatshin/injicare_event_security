@@ -15,8 +15,8 @@ jobs:
       - name: Generate env file
         run: |
           touch env
-          echo "SUPABASE_ANONKEY=${{ secrets.SUPABASE_ANONKEY }}" >> env
-          echo "SUPABASE_URL=${{ secrets.SUPABASE_URL }}" >> env
+          printf "SUPABASE_URL=%s\n" "${{ secrets.SUPABASE_URL }}" > web/env
+          printf "SUPABASE_ANONKEY=%s\n" "${{ secrets.SUPABASE_ANONKEY }}" >> web/env
 
       - uses: bluefireteam/flutter-gh-pages@v7
         with:
