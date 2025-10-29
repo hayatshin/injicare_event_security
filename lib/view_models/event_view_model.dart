@@ -131,6 +131,9 @@ class EventViewModel extends AsyncNotifier<void> {
           userAchieveOrNot: data["userAchieveOrNot"],
           participantsNumber: participantsNumber,
         );
+
+        print("scorePointModel -> ${scorePointModel.userDiaryCount}");
+
         return scorePointModel;
       }
     } catch (e) {

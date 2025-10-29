@@ -17,6 +17,7 @@ Future<String?> readInjectedToken() async {
 
   // JS → Dart
   final String? token = (tokenJs as JSString?)?.toDart;
+
   return token;
 }
 
